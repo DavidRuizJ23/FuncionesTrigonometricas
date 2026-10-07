@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Infografía Maestra: Teoría de Funciones Matemáticas</title>
+    <title>Infografía Maestra: Funciones Trigonométricas</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- KaTeX CDN for Mathematical Typography -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
-    <!-- Phosphor Icons for Crisp UI Glyphs -->
+    <!-- Phosphor Icons for Glyphs -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     
     <script>
@@ -18,20 +18,22 @@
             theme: {
                 extend: {
                     colors: {
-                        brand: {
-                            50: '#eef2ff',
-                            100: '#e0e7ff',
-                            500: '#6366f1',
-                            600: '#4f46e5',
-                            700: '#4338ca',
-                            900: '#312e81',
+                        trig: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            900: '#134e4a',
                         },
                         math: {
                             cyan: '#06b6d4',
                             amber: '#f59e0b',
                             emerald: '#10b981',
                             rose: '#f43f5e',
-                            violet: '#8b5cf6'
+                            violet: '#8b5cf6',
+                            blue: '#3b82f6',
+                            indigo: '#6366f1'
                         }
                     },
                     fontFamily: {
@@ -42,1244 +44,1271 @@
             }
         }
     </script>
+
     <style>
         .glass-card {
-            background: rgba(255, 255, 255, 0.92);
+            background: rgba(255, 255, 255, 0.94);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(226, 232, 240, 0.8);
+            border: 1px solid rgba(226, 232, 240, 0.85);
         }
-        .math-badge {
+        .trig-pill {
             display: inline-flex;
             align-items: center;
-            padding: 0.15rem 0.5rem;
+            padding: 0.2rem 0.65rem;
             border-radius: 9999px;
-            font-size: 0.875rem;
-            font-weight: 600;
-        }
-        /* Custom arrow styles for interactive mapping */
-        .mapping-arrow {
-            transition: stroke-dashoffset 0.4s ease, stroke 0.3s;
+            font-size: 0.8rem;
+            font-weight: 700;
         }
         canvas {
             touch-action: none;
+            user-select: none;
+        }
+        /* Custom scrollbar for mathematical formula boxes */
+        .formula-scroll::-webkit-scrollbar {
+            height: 4px;
+        }
+        .formula-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col font-sans selection:bg-brand-500 selection:text-white">
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col font-sans selection:bg-teal-500 selection:text-white">
 
     <!-- Top Sticky Header -->
-    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200">
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-math-violet flex items-center justify-center text-white shadow-md shadow-brand-500/20">
-                    <i class="ph-bold ph-function text-xl"></i>
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-teal-600 to-cyan-500 flex items-center justify-center text-white shadow-md shadow-teal-500/25">
+                    <i class="ph-bold ph-wave-sine text-2xl"></i>
                 </div>
                 <div>
-                    <h1 class="text-lg font-black text-slate-900 tracking-tight leading-none">Teoría de Funciones</h1>
-                    <span class="text-xs text-brand-600 font-semibold tracking-wide uppercase">Guía Conceptual & Matemática</span>
+                    <h1 class="text-lg font-black text-slate-900 tracking-tight leading-none">Funciones Trigonométricas</h1>
+                    <span class="text-xs text-teal-600 font-bold tracking-wide uppercase">Del Círculo al Ritmo del Cosmos</span>
                 </div>
             </div>
 
-            <!-- Fast Navigation Links -->
+            <!-- Navigation Links -->
             <nav class="hidden md:flex items-center space-x-1 text-sm font-medium text-slate-600">
-                <a href="#que-es" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-slate-100 transition">¿Qué es?</a>
-                <a href="#componentes" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-slate-100 transition">Dominio & Rango</a>
-                <a href="#clasificacion" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-slate-100 transition">Inyectiva / Biyectiva</a>
-                <a href="#paridad" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-slate-100 transition">Par & Impar</a>
-                <a href="#operaciones" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-slate-100 transition">Operaciones & Composición</a>
-                <a href="#laboratorio" class="px-3.5 py-1.5 rounded-lg bg-brand-600 text-white hover:bg-brand-700 shadow-sm transition">Autoevaluación</a>
+                <a href="#origen" class="px-3 py-1.5 rounded-lg hover:text-teal-600 hover:bg-teal-50 transition">¿De dónde nacen?</a>
+                <a href="#circulo-laboratorio" class="px-3 py-1.5 rounded-lg hover:text-teal-600 hover:bg-teal-50 transition">Círculo a Onda</a>
+                <a href="#las-6-funciones" class="px-3 py-1.5 rounded-lg hover:text-teal-600 hover:bg-teal-50 transition">El Elenco de las 6</a>
+                <a href="#transformaciones" class="px-3 py-1.5 rounded-lg hover:text-teal-600 hover:bg-teal-50 transition">ADN de Ondas</a>
+                <a href="#trucos-tips" class="px-3 py-1.5 rounded-lg hover:text-teal-600 hover:bg-teal-50 transition">Trucos & Tips</a>
+                <a href="#autoevaluacion" class="px-3.5 py-1.5 rounded-lg bg-teal-600 text-white hover:bg-teal-700 shadow-xs font-semibold transition">10 Retos</a>
             </nav>
         </div>
     </header>
 
-    <!-- Main Content Container -->
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-16">
 
         <!-- Hero Section -->
-        <section class="relative rounded-3xl bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white p-8 sm:p-12 overflow-hidden shadow-2xl">
-            <div class="absolute -right-16 -bottom-16 w-80 h-80 bg-brand-500/20 rounded-full blur-3xl pointer-events-none"></div>
-            <div class="absolute -left-16 -top-16 w-72 h-72 bg-math-cyan/20 rounded-full blur-3xl pointer-events-none"></div>
+        <section class="relative rounded-3xl bg-gradient-to-br from-slate-950 via-teal-950 to-slate-900 text-white p-8 sm:p-12 overflow-hidden shadow-2xl">
+            <div class="absolute -right-20 -bottom-20 w-96 h-96 bg-teal-500/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -left-20 -top-20 w-80 h-80 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"></div>
 
             <div class="relative z-10 max-w-3xl space-y-5">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-xs font-semibold uppercase tracking-wider text-indigo-200">
-                    <i class="ph-fill ph-sparkle text-math-amber"></i> Guía Amigable y Visual
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-xs font-semibold uppercase tracking-wider text-teal-300">
+                    <i class="ph-fill ph-circle text-teal-400"></i> Guía Visual, Intuitiva & Práctica
                 </div>
                 <h2 class="text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight">
-                    El mapa que conecta causas y consecuencias sin confusiones.
+                    ¿Qué tienen en común un círculo girando, el sonido de tu música y las olas del mar?
                 </h2>
                 <p class="text-slate-300 text-base sm:text-lg leading-relaxed">
-                    Una función no es un monstruo lleno de fórmulas raras: en el fondo, es simplemente <strong>un acuerdo claro y predecible entre dos cosas</strong>. Si le das un dato de entrada (<span class="text-math-cyan font-mono font-bold">x</span>), siempre te dará <strong>un único resultado garantizado</strong> (<span class="text-math-rose font-mono font-bold">y</span>). ¡Sin sorpresas ni dobles respuestas!
+                    Muchas veces nos enseñan la trigonometría como un montón de triángulos estáticos aburridos. Pero su verdadero superpoder comienza cuando el triángulo <strong>empieza a girar en círculos</strong>: cada giro genera un ritmo periódico, una ola que sube y baja. ¡La trigonometría es el lenguaje matemático de los ciclos repetitivos!
                 </p>
                 <div class="flex flex-wrap gap-4 pt-2">
                     <div class="flex items-center gap-2 text-sm bg-white/5 border border-white/10 px-4 py-2 rounded-xl">
-                        <span class="w-3 h-3 rounded-full bg-math-emerald"></span> Analogías Cotidianas
+                        <span class="w-3 h-3 rounded-full bg-math-rose"></span> <strong>Seno:</strong> Altura vertical
                     </div>
                     <div class="flex items-center gap-2 text-sm bg-white/5 border border-white/10 px-4 py-2 rounded-xl">
-                        <span class="w-3 h-3 rounded-full bg-math-cyan"></span> El Significado de los Símbolos
+                        <span class="w-3 h-3 rounded-full bg-math-cyan"></span> <strong>Coseno:</strong> Avance horizontal
                     </div>
                     <div class="flex items-center gap-2 text-sm bg-white/5 border border-white/10 px-4 py-2 rounded-xl">
-                        <span class="w-3 h-3 rounded-full bg-math-violet"></span> Simuladores Interactivos
+                        <span class="w-3 h-3 rounded-full bg-math-amber"></span> <strong>Tangente:</strong> Pendiente / Inclinación
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SECCIÓN 1: ¿QUÉ ES UNA FUNCIÓN? INTUICIÓN Y FORMALISMO -->
-        <section id="que-es" class="space-y-8">
+        <!-- SECCIÓN 1: EL VIAJE EVOLUTIVO: DEL TRIÁNGULO AL CÍRCULO -->
+        <section id="origen" class="space-y-8">
             <div class="border-b border-slate-200 pb-4">
-                <div class="flex items-center gap-2 text-brand-600 font-bold text-sm uppercase tracking-wider">
-                    <span class="w-6 h-1 bg-brand-600 rounded-full"></span> Módulo 01
+                <div class="flex items-center gap-2 text-teal-600 font-bold text-sm uppercase tracking-wider">
+                    <span class="w-6 h-1 bg-teal-600 rounded-full"></span> Módulo 01
                 </div>
-                <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">¿Qué es una Función? La Idea Intuitiva y sus Reglas de Oro</h3>
+                <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">¿De Dónde Nacen? El Gran Salto Conceptual</h3>
+                <p class="text-slate-600 text-sm mt-1">De la sombra de las pirámides al círculo que nunca deja de rotar.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+                
+                <!-- Etapa 1: Triángulo Rectángulo (El origen geométrico) -->
+                <div class="glass-card rounded-2xl p-6 sm:p-7 shadow-xs border border-slate-200/80 flex flex-col justify-between space-y-5">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h4 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                                <i class="ph-bold ph-triangle text-amber-500 text-xl"></i>
+                                Etapa 1: La Razón Geométrica (Triángulo Fijo)
+                            </h4>
+                            <span class="trig-pill bg-amber-50 text-amber-700">Ángulos de 0° a 90°</span>
+                        </div>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Históricamente, los navegantes y astrónomos necesitaban medir distancias imposibles (como la altura de una torre o la distancia a un barco). Descubrieron que en un triángulo rectángulo, <strong>sin importar qué tan grande o chico sea el triángulo</strong>, la proporción entre sus lados solo depende del ángulo $\theta$.
+                        </p>
+                    </div>
+
+                    <!-- Mnemotecnia SOH CAH TOA en tarjeta visual -->
+                    <div class="bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-4 sm:p-5 space-y-3">
+                        <div class="text-xs font-black uppercase tracking-wider text-amber-800 flex items-center gap-1.5">
+                            <i class="ph-bold ph-sparkle text-amber-600"></i> La Famosa Clave: "SOH - CAH - TOA"
+                        </div>
+                        <div class="grid grid-cols-3 gap-2 sm:gap-3 text-center">
+                            <div class="bg-white p-3 rounded-xl border border-amber-200 shadow-xs">
+                                <div class="font-black text-rose-600 text-sm sm:text-base">SOH</div>
+                                <div class="text-xs text-slate-700 mt-1">$$\sin\theta = \frac{\text{Op}}{\text{Hip}}$$</div>
+                                <span class="text-[10px] text-slate-500 font-medium">Seno = Opuesto / Hip</span>
+                            </div>
+                            <div class="bg-white p-3 rounded-xl border border-amber-200 shadow-xs">
+                                <div class="font-black text-cyan-600 text-sm sm:text-base">CAH</div>
+                                <div class="text-xs text-slate-700 mt-1">$$\cos\theta = \frac{\text{Ady}}{\text{Hip}}$$</div>
+                                <span class="text-[10px] text-slate-500 font-medium">Coseno = Adyacente / Hip</span>
+                            </div>
+                            <div class="bg-white p-3 rounded-xl border border-amber-200 shadow-xs">
+                                <div class="font-black text-emerald-600 text-sm sm:text-base">TOA</div>
+                                <div class="text-xs text-slate-700 mt-1">$$\tan\theta = \frac{\text{Op}}{\text{Ady}}$$</div>
+                                <span class="text-[10px] text-slate-500 font-medium">Tangente = Opuesto / Ady</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- El problema limitante -->
+                    <div class="bg-rose-50 border-l-4 border-rose-400 p-3.5 rounded-r-xl text-xs text-rose-900">
+                        <strong>El gran límite del triángulo:</strong> ¿Qué pasa si quieres calcular $\sin(150^\circ)$, $\sin(360^\circ)$ o $\sin(-45^\circ)$? <em>¡Es imposible meter un ángulo de 150° en un triángulo rectángulo!</em> Se necesitaba una idea más poderosa.
+                    </div>
+                </div>
+
+                <!-- Etapa 2: El Círculo Unitario (La Liberación Matemática) -->
+                <div class="glass-card rounded-2xl p-6 sm:p-7 shadow-xs border border-slate-200/80 flex flex-col justify-between space-y-5">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h4 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                                <i class="ph-bold ph-circle-dashed text-teal-600 text-xl"></i>
+                                Etapa 2: El Círculo Unitario (Radio = 1)
+                            </h4>
+                            <span class="trig-pill bg-teal-50 text-teal-700">¡Cualquier Ángulo Posible!</span>
+                        </div>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Los matemáticos colocaron un puntero giratorio en el origen $(0,0)$ de un plano y le dieron una longitud fija de <strong>radio = 1</strong>. Al girar, la punta del radio marca una coordenada $(x, y)$. ¡Y aquí ocurre la magia más bella de la matemática!:
+                        </p>
+                    </div>
+
+                    <!-- Coordenadas simplificadas -->
+                    <div class="bg-slate-900 text-slate-100 rounded-2xl p-5 border border-slate-800 space-y-4">
+                        <div class="text-xs font-semibold uppercase tracking-wider text-teal-300 flex items-center justify-between">
+                            <span>Las Coordenadas del Punto Giratorio:</span>
+                            <span class="font-mono text-cyan-300">P = (x, y)</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div class="bg-slate-800/90 p-3 rounded-xl border border-slate-700/70">
+                                <div class="flex items-center gap-2 text-cyan-300 font-bold text-xs">
+                                    <i class="ph-bold ph-arrows-horizontal"></i> Coordenada X (Horizontal)
+                                </div>
+                                <div class="text-lg font-mono font-black text-white mt-1">$$x = \cos(\theta)$$</div>
+                                <p class="text-[11px] text-slate-400">Qué tan a la izquierda o derecha está el punto.</p>
+                            </div>
+                            <div class="bg-slate-800/90 p-3 rounded-xl border border-slate-700/70">
+                                <div class="flex items-center gap-2 text-rose-300 font-bold text-xs">
+                                    <i class="ph-bold ph-arrows-vertical"></i> Coordenada Y (Vertical)
+                                </div>
+                                <div class="text-lg font-mono font-black text-white mt-1">$$y = \sin(\theta)$$</div>
+                                <p class="text-[11px] text-slate-400">Qué tan arriba o abajo está la punta del radio.</p>
+                            </div>
+                        </div>
+
+                        <div class="text-xs text-teal-200 border-t border-slate-800 pt-3">
+                            💡 Como la hipotenusa vale $1$, por Pitágoras ($x^2 + y^2 = 1$) nace al instante la <strong>Identidad Fundamental</strong>:
+                            <div class="text-center font-mono font-bold text-sm text-amber-300 mt-1">
+                                $$\cos^2(\theta) + \sin^2(\theta) = 1$$
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Radián concept -->
+                    <div class="bg-teal-50 border-l-4 border-teal-500 p-3.5 rounded-r-xl text-xs text-teal-900">
+                        <strong>¿Qué rayos es un Radián?</strong> Olvida los 360° inventados por los babilonios. Un radián es la forma natural de medir ángulos: es el ángulo que abarcas cuando caminas sobre el borde del círculo <em>una distancia igual al radio</em>. Por eso, toda la vuelta completa de $360^\circ$ equivale a la circunferencia $2\pi$ radianes.
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: EL LABORATORIO VIVO - DEL CÍRCULO A LA ONDA -->
+        <section id="circulo-laboratorio" class="space-y-6">
+            <div class="border-b border-slate-200 pb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                <div>
+                    <div class="flex items-center gap-2 text-teal-600 font-bold text-sm uppercase tracking-wider">
+                        <span class="w-6 h-1 bg-teal-600 rounded-full"></span> Módulo 02
+                    </div>
+                    <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">Simulador Interactivo: La Rueda que Desenrolla Ondas</h3>
+                    <p class="text-slate-600 text-sm mt-1">Observa cómo la altura del círculo unitario se proyecta en tiempo real para dibujar la función seno y coseno.</p>
+                </div>
+
+                <!-- Controls & Play/Pause -->
+                <div class="flex items-center gap-2 self-start sm:self-auto">
+                    <button id="btnPlayPause" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white font-semibold text-xs rounded-xl shadow-xs transition flex items-center gap-2">
+                        <i id="playIcon" class="ph-bold ph-play"></i> <span id="playLabel">Iniciar Rotación</span>
+                    </button>
+                    <button id="btnResetAngle" class="px-3 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold text-xs rounded-xl transition flex items-center gap-1.5" title="Reiniciar a 0°">
+                        <i class="ph-bold ph-arrow-counter-clockwise text-sm"></i> 0°
+                    </button>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-md space-y-6">
+                
+                <!-- Canvas Screen -->
+                <div class="relative w-full h-80 sm:h-96 bg-slate-950 rounded-2xl overflow-hidden shadow-inner border border-slate-800 flex items-center justify-center">
+                    <canvas id="trigCanvas" class="w-full h-full block"></canvas>
+
+                    <!-- Real-time HUD badges -->
+                    <div class="absolute top-3 left-3 bg-slate-900/90 backdrop-blur border border-slate-700/80 px-3.5 py-2 rounded-xl text-xs font-mono space-y-1 shadow-lg pointer-events-none">
+                        <div class="text-slate-400 font-bold">Ángulo actual $\theta$:</div>
+                        <div class="text-teal-400 text-sm font-black" id="hudAngle">0° = 0.00 rad</div>
+                    </div>
+
+                    <div class="absolute top-3 right-3 bg-slate-900/90 backdrop-blur border border-slate-700/80 px-3.5 py-2 rounded-xl text-xs font-mono space-y-1 shadow-lg pointer-events-none text-right">
+                        <div class="text-rose-400 font-bold">$$\sin(\theta) = \text{altura } y = $$ <span id="hudSin" class="text-white font-black text-sm">0.00</span></div>
+                        <div class="text-cyan-400 font-bold">$$\cos(\theta) = \text{base } x = $$ <span id="hudCos" class="text-white font-black text-sm">1.00</span></div>
+                    </div>
+                </div>
+
+                <!-- Interactive Sliders and Options -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center pt-2">
+                    <!-- Angle Slider -->
+                    <div class="md:col-span-2 space-y-2">
+                        <div class="flex justify-between items-center text-xs font-bold text-slate-700">
+                            <label for="angleSlider" class="flex items-center gap-1.5">
+                                <i class="ph-bold ph-compass text-teal-600"></i> Desliza el ángulo manualmente:
+                            </label>
+                            <span class="text-teal-700 font-mono" id="sliderValueText">0°</span>
+                        </div>
+                        <input type="range" id="angleSlider" min="0" max="720" value="0" step="1" 
+                            class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-teal-600">
+                        <div class="flex justify-between text-[10px] text-slate-400 font-mono">
+                            <span>0° (0)</span>
+                            <span>90° (π/2)</span>
+                            <span>180° (π)</span>
+                            <span>270° (3π/2)</span>
+                            <span>360° (2π)</span>
+                            <span>720° (4π - 2 ciclos)</span>
+                        </div>
+                    </div>
+
+                    <!-- View Controls -->
+                    <div class="flex flex-col gap-2 bg-slate-50 p-3 rounded-2xl border border-slate-200 text-xs">
+                        <span class="font-bold text-slate-700">Modo de visualización:</span>
+                        <div class="flex gap-2">
+                            <button id="toggleWaveSin" class="flex-1 py-1.5 px-2 bg-rose-600 text-white rounded-lg font-bold text-center shadow-xs transition">
+                                Ver Seno (y)
+                            </button>
+                            <button id="toggleWaveCos" class="flex-1 py-1.5 px-2 bg-slate-200 text-slate-700 rounded-lg font-bold text-center hover:bg-slate-300 transition">
+                                Ver Coseno (x)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Insights box -->
+                <div class="bg-slate-100 rounded-2xl p-4 border border-slate-200 text-xs text-slate-600 leading-relaxed flex items-start gap-3">
+                    <i class="ph-fill ph-lightbulb text-amber-500 text-xl flex-shrink-0 mt-0.5"></i>
+                    <div>
+                        <strong>¿Por qué una onda es infinita y periódica?</strong> Porque el círculo no tiene fin. Si sigues girando más allá de $360^\circ$ ($2\pi$), vuelves a pasar por los mismos puntos una y otra vez. Por eso, el <strong>periodo del seno y coseno es $2\pi$ ($360^\circ$)</strong>: la gráfica repite exactamente la misma silueta cada ciclo completo.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: EL ELENCO COMPLETO - LAS 6 FUNCIONES -->
+        <section id="las-6-funciones" class="space-y-6">
+            <div class="border-b border-slate-200 pb-4">
+                <div class="flex items-center gap-2 text-teal-600 font-bold text-sm uppercase tracking-wider">
+                    <span class="w-6 h-1 bg-teal-600 rounded-full"></span> Módulo 03
+                </div>
+                <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">El Elenco de las 6 Funciones Trigonométricas</h3>
+                <p class="text-slate-600 text-sm mt-1">Las 3 estrellas principales y sus 3 gemelas recíprocas (quién se invierte con quién).</p>
+            </div>
+
+            <!-- Grid de las 6 Funciones -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- 1. Seno -->
+                <div class="glass-card rounded-2xl p-5 border-t-4 border-t-rose-500 shadow-xs space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-black uppercase tracking-wider text-rose-600">Principal 01</span>
+                        <span class="px-2 py-0.5 bg-rose-50 text-rose-700 rounded-md text-xs font-mono font-bold">Impar: f(-x) = -f(x)</span>
+                    </div>
+                    <h4 class="text-xl font-black text-slate-900">Seno: $f(x) = \sin(x)$</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Mide la altura vertical. Arranca en el centro exacto $(0,0)$, sube a su cresta máxima $+1$ en $\frac{\pi}{2}$ ($90^\circ$), cruza por cero en $\pi$ ($180^\circ$) y cae al valle $-1$ en $\frac{3\pi}{2}$ ($270^\circ$).
+                    </p>
+                    <div class="bg-rose-50/60 rounded-xl p-3 text-xs font-mono space-y-1 text-slate-700">
+                        <div><strong>Dominio:</strong> $\mathbb{R}$ (todo número real)</div>
+                        <div><strong>Rango:</strong> $[-1, 1]$ (jamás pasa de 1 ni -1)</div>
+                        <div><strong>Periodo:</strong> $T = 2\pi$ ($360^\circ$)</div>
+                    </div>
+                </div>
+
+                <!-- 2. Coseno -->
+                <div class="glass-card rounded-2xl p-5 border-t-4 border-t-cyan-500 shadow-xs space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-black uppercase tracking-wider text-cyan-600">Principal 02</span>
+                        <span class="px-2 py-0.5 bg-cyan-50 text-cyan-700 rounded-md text-xs font-mono font-bold">Par: f(-x) = f(x)</span>
+                    </div>
+                    <h4 class="text-xl font-black text-slate-900">Coseno: $f(x) = \cos(x)$</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Es exactamente la misma ola del seno, pero <strong>desfasada un cuarto de ciclo ($90^\circ$ o $\frac{\pi}{2}$)</strong> hacia la izquierda. Por eso arranca en su punto más alto: $(0, 1)$.
+                    </p>
+                    <div class="bg-cyan-50/60 rounded-xl p-3 text-xs font-mono space-y-1 text-slate-700">
+                        <div><strong>Dominio:</strong> $\mathbb{R}$ (todo número real)</div>
+                        <div><strong>Rango:</strong> $[-1, 1]$</div>
+                        <div><strong>Periodo:</strong> $T = 2\pi$ ($360^\circ$)</div>
+                    </div>
+                </div>
+
+                <!-- 3. Tangente -->
+                <div class="glass-card rounded-2xl p-5 border-t-4 border-t-emerald-500 shadow-xs space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-black uppercase tracking-wider text-emerald-600">Principal 03</span>
+                        <span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 rounded-md text-xs font-mono font-bold">Impar: f(-x) = -f(x)</span>
+                    </div>
+                    <h4 class="text-xl font-black text-slate-900">Tangente: $f(x) = \tan(x)$</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Representa la pendiente: $\tan(x) = \frac{\sin(x)}{\cos(x)}$. A medida que el ángulo se acerca a $90^\circ$, la inclinación se vuelve vertical y explota hacia el infinito.
+                    </p>
+                    <div class="bg-emerald-50/60 rounded-xl p-3 text-xs font-mono space-y-1 text-slate-700">
+                        <div><strong>Dominio:</strong> $\mathbb{R} \setminus \{ \frac{\pi}{2} + k\pi \}$ (asíntotas)</div>
+                        <div><strong>Rango:</strong> $(-\infty, +\infty)$ (¡ilimitado!)</div>
+                        <div><strong>Periodo:</strong> $T = \pi$ ($180^\circ$ ¡se repite el doble de rápido!)</div>
+                    </div>
+                </div>
+
+                <!-- 4. Cosecante (Recíproca del Seno) -->
+                <div class="glass-card rounded-2xl p-5 border-t-4 border-t-indigo-500 shadow-xs space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-black uppercase tracking-wider text-indigo-600">Recíproca de Seno</span>
+                        <span class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-mono">1 / sin(x)</span>
+                    </div>
+                    <h4 class="text-xl font-black text-slate-900">Cosecante: $\csc(x)$</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Es el inverso multiplicativo del seno: $\csc(x) = \frac{1}{\sin(x)}$. Como no se puede dividir entre 0, tiene asíntotas verticales donde el seno vale 0 (en $0, \pi, 2\pi$, etc.).
+                    </p>
+                    <div class="bg-indigo-50/60 rounded-xl p-3 text-xs font-mono space-y-1 text-slate-700">
+                        <div><strong>Dominio:</strong> $\mathbb{R} \setminus \{ k\pi \}$</div>
+                        <div><strong>Rango:</strong> $(-\infty, -1] \cup [1, +\infty)$</div>
+                        <div><strong>Periodo:</strong> $T = 2\pi$</div>
+                    </div>
+                </div>
+
+                <!-- 5. Secante (Recíproca del Coseno) -->
+                <div class="glass-card rounded-2xl p-5 border-t-4 border-t-violet-500 shadow-xs space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-black uppercase tracking-wider text-violet-600">Recíproca de Coseno</span>
+                        <span class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-mono">1 / cos(x)</span>
+                    </div>
+                    <h4 class="text-xl font-black text-slate-900">Secante: $\sec(x)$</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Es el inverso del coseno: $\sec(x) = \frac{1}{\cos(x)}$. Tiene ramas en forma de "U" que descansan sobre las crestas y valles de la curva del coseno.
+                    </p>
+                    <div class="bg-violet-50/60 rounded-xl p-3 text-xs font-mono space-y-1 text-slate-700">
+                        <div><strong>Dominio:</strong> $\mathbb{R} \setminus \{ \frac{\pi}{2} + k\pi \}$</div>
+                        <div><strong>Rango:</strong> $(-\infty, -1] \cup [1, +\infty)$</div>
+                        <div><strong>Periodo:</strong> $T = 2\pi$</div>
+                    </div>
+                </div>
+
+                <!-- 6. Cotangente (Recíproca de la Tangente) -->
+                <div class="glass-card rounded-2xl p-5 border-t-4 border-t-amber-500 shadow-xs space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-black uppercase tracking-wider text-amber-600">Recíproca de Tangente</span>
+                        <span class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-mono">cos(x) / sin(x)</span>
+                    </div>
+                    <h4 class="text-xl font-black text-slate-900">Cotangente: $\cot(x)$</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        $\cot(x) = \frac{1}{\tan(x)} = \frac{\cos(x)}{\sin(x)}$. Es decreciente en todos sus tramos y tiene asíntotas verticales exactamente donde la función seno se vuelve cero.
+                    </p>
+                    <div class="bg-amber-50/60 rounded-xl p-3 text-xs font-mono space-y-1 text-slate-700">
+                        <div><strong>Dominio:</strong> $\mathbb{R} \setminus \{ k\pi \}$</div>
+                        <div><strong>Rango:</strong> $(-\infty, +\infty)$</div>
+                        <div><strong>Periodo:</strong> $T = \pi$</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Tip para recordar recíprocas sin confundirse -->
+            <div class="bg-gradient-to-r from-teal-50 to-indigo-50 border border-teal-200 rounded-2xl p-4 flex items-center gap-3 text-xs text-slate-700">
+                <div class="w-8 h-8 rounded-full bg-teal-600 text-white flex items-center justify-center font-black flex-shrink-0">
+                    💡
+                </div>
+                <div>
+                    <strong>Regla nemotécnica para no cruzar cables:</strong> 
+                    Fíjate en las letras iniciales: la que empieza con <strong>S</strong> (Seno) va con la que empieza con <strong>C</strong> (Cosecante: $\frac{1}{\sin}$). Y la que empieza con <strong>C</strong> (Coseno) va con la que empieza con <strong>S</strong> (Secante: $\frac{1}{\cos}$). <em>¡Las iniciales 'S' y 'C' siempre van emparejadas!</em>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 4: EL ADN DE LAS ONDAS (TRANSFORMACIONES: A, B, C, D) -->
+        <section id="transformaciones" class="space-y-8">
+            <div class="border-b border-slate-200 pb-4">
+                <div class="flex items-center gap-2 text-teal-600 font-bold text-sm uppercase tracking-wider">
+                    <span class="w-6 h-1 bg-teal-600 rounded-full"></span> Módulo 04
+                </div>
+                <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">El ADN de las Ondas: Modificando la Fórmula General</h3>
+                <p class="text-slate-600 text-sm mt-1">Cualquier onda sonora, señal de radio o marea oceánica se modela con esta ecuación estándar.</p>
+            </div>
+
+            <!-- Ecuación Principal -->
+            <div class="bg-slate-900 text-white rounded-3xl p-6 sm:p-8 border border-slate-800 space-y-6">
+                <div class="text-center space-y-2">
+                    <span class="text-xs uppercase font-bold tracking-wider text-teal-400">La Ecuación Sinusoidal Universal</span>
+                    <div class="text-2xl sm:text-4xl font-mono font-black text-white tracking-wide">
+                        $$y = A \cdot \sin(B(x - C)) + D$$
+                    </div>
+                    <p class="text-slate-400 text-xs sm:text-sm max-w-2xl mx-auto">
+                        Cada una de las cuatro letras ($A, B, C, D$) tiene una misión visual concreta en la forma física de la onda.
+                    </p>
+                </div>
+
+                <!-- Cuadrícula interactiva de parámetros con sliders en vivo -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
+                    <!-- Parámetro A -->
+                    <div class="bg-slate-800/90 rounded-2xl p-4 border border-rose-500/40 space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-bold text-rose-400 uppercase tracking-wider">Amplitud (|A|)</span>
+                            <span class="text-xs font-mono font-bold text-white" id="valA">1.0</span>
+                        </div>
+                        <p class="text-[11px] text-slate-300">¿Qué tan alta es la ola? Es el volumen de la música o la fuerza de la señal.</p>
+                        <input type="range" id="sliderA" min="0.2" max="3.0" step="0.1" value="1.0" class="w-full accent-rose-500 cursor-pointer">
+                    </div>
+
+                    <!-- Parámetro B -->
+                    <div class="bg-slate-800/90 rounded-2xl p-4 border border-cyan-500/40 space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-bold text-cyan-400 uppercase tracking-wider">Frecuencia (B)</span>
+                            <span class="text-xs font-mono font-bold text-white" id="valB">1.0</span>
+                        </div>
+                        <p class="text-[11px] text-slate-300">Periodo $T = \frac{2\pi}{B}$. Controla el tono (grave o agudo) y qué tan apretada está la onda.</p>
+                        <input type="range" id="sliderB" min="0.5" max="3.0" step="0.25" value="1.0" class="w-full accent-cyan-500 cursor-pointer">
+                    </div>
+
+                    <!-- Parámetro C -->
+                    <div class="bg-slate-800/90 rounded-2xl p-4 border border-amber-500/40 space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">Desfase (C)</span>
+                            <span class="text-xs font-mono font-bold text-white" id="valC">0.0</span>
+                        </div>
+                        <p class="text-[11px] text-slate-300">Mueve la ola hacia la izquierda o derecha (retraso o adelanto en el tiempo).</p>
+                        <input type="range" id="sliderC" min="-3.14" max="3.14" step="0.1" value="0.0" class="w-full accent-amber-500 cursor-pointer">
+                    </div>
+
+                    <!-- Parámetro D -->
+                    <div class="bg-slate-800/90 rounded-2xl p-4 border border-emerald-500/40 space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Eje Medio (D)</span>
+                            <span class="text-xs font-mono font-bold text-white" id="valD">0.0</span>
+                        </div>
+                        <p class="text-[11px] text-slate-300">Línea de equilibrio o nivel base: sube o baja verticalmente toda la gráfica.</p>
+                        <input type="range" id="sliderD" min="-2.0" max="2.0" step="0.2" value="0.0" class="w-full accent-emerald-500 cursor-pointer">
+                    </div>
+                </div>
+
+                <!-- Canvas de Visualización Dinámica de Onda -->
+                <div class="relative w-full h-64 bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 flex items-center justify-center">
+                    <canvas id="waveSimCanvas" class="w-full h-full block"></canvas>
+                    <div id="liveFormulaBadge" class="absolute top-3 left-3 bg-slate-900/90 border border-slate-700 text-teal-300 text-xs font-mono px-3 py-1.5 rounded-lg shadow-md">
+                        y = 1.0·sin(1.0·x)
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 5: TRUCOS DE SUPERVIVENCIA Y ÁNGULOS NOTABLES -->
+        <section id="trucos-tips" class="space-y-8">
+            <div class="border-b border-slate-200 pb-4">
+                <div class="flex items-center gap-2 text-teal-600 font-bold text-sm uppercase tracking-wider">
+                    <span class="w-6 h-1 bg-teal-600 rounded-full"></span> Módulo 05
+                </div>
+                <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">Trucos de Supervivencia: Signos y Ángulos Notables</h3>
+                <p class="text-slate-600 text-sm mt-1">Herramientas mnemotécnicas para resolver cualquier examen sin memorizar tablas gigantes.</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
                 
-                <!-- Tarjeta Conceptual: La Máquina / Vida Real -->
-                <div class="glass-card rounded-2xl p-6 shadow-sm border border-slate-200/80 space-y-6">
+                <!-- Mnemotecnia de Signos en los 4 Cuadrantes -->
+                <div class="glass-card rounded-2xl p-6 sm:p-7 shadow-xs border border-slate-200/80 space-y-4">
                     <div class="flex items-center justify-between">
-                        <h4 class="text-lg font-bold text-slate-900 flex items-center gap-2">
-                            <i class="ph-bold ph-gear text-brand-600 text-xl"></i>
-                            1. Imagínala como una Máquina Confiable
+                        <h4 class="font-bold text-slate-900 text-lg flex items-center gap-2">
+                            <i class="ph-bold ph-compass-tool text-teal-600 text-xl"></i>
+                            1. Signos: "Todas Saben Tomar Café"
                         </h4>
-                        <span class="math-badge bg-brand-50 text-brand-700">Punto de Partida</span>
+                        <span class="trig-pill bg-teal-50 text-teal-700">Los 4 Cuadrantes</span>
                     </div>
 
-                    <p class="text-slate-600 leading-relaxed text-sm">
-                        Piensa en una licuadora o una máquina de café: colocas un ingrediente de entrada (<span class="font-mono text-indigo-600 font-bold">x</span>), la máquina sigue su receta fija, y te entrega <strong>un resultado exacto</strong> (<span class="font-mono text-rose-600 font-bold">y = f(x)</span>). Si pones granos de café, no esperas que a veces salga jugo de naranja: <em>ante el mismo botón, la máquina siempre responde con certeza</em>.
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        ¿Cómo saber si el seno, coseno o tangente son positivos o negativos en un ángulo como $210^\circ$ o $315^\circ$? Recuerda las iniciales de esta frase recorriendo los cuadrantes del <strong>I al IV</strong> en sentido antihorario:
                     </p>
 
-                    <!-- Interactive Vending Machine Simulator -->
-                    <div class="bg-slate-100 rounded-2xl p-5 border border-slate-200 space-y-4">
-                        <div class="flex justify-between items-center text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                            <span>Simulador de Máquina Funcional</span>
-                            <span class="text-brand-600 font-mono">f(x) = 2x + 1</span>
+                    <!-- Matriz de los 4 Cuadrantes -->
+                    <div class="grid grid-cols-2 gap-3 text-center text-xs">
+                        <!-- Cuadrante II -->
+                        <div class="bg-indigo-50 border border-indigo-200 rounded-2xl p-3.5 space-y-1">
+                            <span class="text-[10px] font-bold text-indigo-500 uppercase">Cuadrante II (90° a 180°)</span>
+                            <div class="text-base font-black text-indigo-900"><strong>S</strong>aben $\implies$ <strong>Seno (+)</strong></div>
+                            <p class="text-[11px] text-slate-600">Coseno y Tangente son (−)</p>
                         </div>
 
-                        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-4 rounded-xl border border-slate-200 shadow-inner">
-                            <!-- Entrada -->
-                            <div class="flex flex-col items-center">
-                                <span class="text-xs font-semibold text-slate-400">Entrada (x)</span>
-                                <input type="number" id="machineInput" value="3" class="w-16 text-center font-bold text-lg border-2 border-brand-500 rounded-lg py-1 focus:outline-none focus:ring-2 focus:ring-brand-400">
-                            </div>
-
-                            <!-- Procesador -->
-                            <div class="flex items-center gap-2">
-                                <i class="ph-bold ph-arrow-right text-slate-400"></i>
-                                <div class="px-4 py-2 bg-gradient-to-r from-brand-600 to-indigo-700 text-white rounded-xl text-center shadow">
-                                    <div class="text-xs uppercase font-medium text-indigo-200">Proceso</div>
-                                    <div class="font-mono font-bold text-sm tracking-wide">Multiplicar por 2 y sumar 1</div>
-                                </div>
-                                <i class="ph-bold ph-arrow-right text-slate-400"></i>
-                            </div>
-
-                            <!-- Salida -->
-                            <div class="flex flex-col items-center">
-                                <span class="text-xs font-semibold text-slate-400">Salida f(x)</span>
-                                <div id="machineOutput" class="w-16 h-10 flex items-center justify-center font-bold text-xl text-rose-600 bg-rose-50 border border-rose-200 rounded-lg">
-                                    7
-                                </div>
-                            </div>
+                        <!-- Cuadrante I -->
+                        <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-3.5 space-y-1">
+                            <span class="text-[10px] font-bold text-emerald-500 uppercase">Cuadrante I (0° a 90°)</span>
+                            <div class="text-base font-black text-emerald-900"><strong>T</strong>odas $\implies$ <strong>TODAS (+)</strong></div>
+                            <p class="text-[11px] text-slate-600">Seno, Coseno y Tan son (+)</p>
                         </div>
 
-                        <!-- Real life example box -->
-                        <div class="bg-amber-50/70 border-l-4 border-amber-400 p-3.5 rounded-r-xl text-xs text-amber-900 space-y-1">
-                            <div class="font-bold flex items-center gap-1.5">
-                                <i class="ph-fill ph-lightbulb text-amber-600"></i> Ejemplos para no olvidarlo nunca:
-                            </div>
-                            <p><strong>Persona $\to$ Edad:</strong> Tú solo tienes una edad en este momento. No puedes tener 18 y 25 años al mismo tiempo. Además, toda persona viva tiene una edad. Como no te falta edad ni tienes dos a la vez, <strong>¡esto sí es una función!</strong></p>
-                            <p class="text-slate-600 pt-1"><em>¿Qué no sería una función?</em> <strong>Persona $\to$ Comida favorita</strong> (alguien podría no tener ninguna, o amar la pizza, las hamburguesas y los tacos a la vez; hay ambigüedad o falta de respuesta única).</p>
+                        <!-- Cuadrante III -->
+                        <div class="bg-amber-50 border border-amber-200 rounded-2xl p-3.5 space-y-1">
+                            <span class="text-[10px] font-bold text-amber-500 uppercase">Cuadrante III (180° a 270°)</span>
+                            <div class="text-base font-black text-amber-900"><strong>T</strong>omar $\implies$ <strong>Tangente (+)</strong></div>
+                            <p class="text-[11px] text-slate-600">Seno y Coseno son (−)</p>
+                        </div>
+
+                        <!-- Cuadrante IV -->
+                        <div class="bg-rose-50 border border-rose-200 rounded-2xl p-3.5 space-y-1">
+                            <span class="text-[10px] font-bold text-rose-500 uppercase">Cuadrante IV (270° a 360°)</span>
+                            <div class="text-base font-black text-rose-900"><strong>C</strong>afé $\implies$ <strong>Coseno (+)</strong></div>
+                            <p class="text-[11px] text-slate-600">Seno y Tangente son (−)</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Tarjeta Formal: Definición Matemática Estricta -->
-                <div class="glass-card rounded-2xl p-6 shadow-sm border border-slate-200/80 space-y-6">
+                <!-- El Truco de la Mano / Raíz para Ángulos Notables -->
+                <div class="glass-card rounded-2xl p-6 sm:p-7 shadow-xs border border-slate-200/80 space-y-4">
                     <div class="flex items-center justify-between">
-                        <h4 class="text-lg font-bold text-slate-900 flex items-center gap-2">
-                            <i class="ph-bold ph-sparkle text-math-violet text-xl"></i>
-                            2. Las Dos Reglas de Oro (Traducidas al Español)
+                        <h4 class="font-bold text-slate-900 text-lg flex items-center gap-2">
+                            <i class="ph-bold ph-hand-palm text-amber-500 text-xl"></i>
+                            2. El Truco de la Raíz para Ángulos Notables
                         </h4>
-                        <span class="math-badge bg-purple-50 text-purple-700">Sin Enredos</span>
+                        <span class="trig-pill bg-amber-50 text-amber-700">0°, 30°, 45°, 60°, 90°</span>
                     </div>
 
-                    <p class="text-slate-600 text-sm leading-relaxed">
-                        Para que una relación entre dos grupos $A$ (origen) y $B$ (destino) sea digna de llamarse <strong>función</strong> ($f: A \to B$), solo debe cumplir dos condiciones muy lógicas:
-                    </p>
-
-                    <!-- Axiomas de Existencia y Unicidad con Tipografía Matemática KaTeX -->
-                    <div class="bg-gradient-to-br from-slate-900 to-indigo-950 text-slate-100 p-6 rounded-2xl border border-indigo-900/60 shadow-lg space-y-5">
-                        <div class="flex items-center justify-between border-b border-indigo-800/60 pb-3">
-                            <div class="flex items-center gap-2">
-                                <span class="w-2.5 h-2.5 rounded-full bg-math-cyan animate-pulse"></span>
-                                <span class="text-xs font-bold tracking-wider uppercase text-indigo-300">Las Reglas del Juego</span>
-                            </div>
-                            <span class="text-[11px] font-medium px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-200 border border-indigo-400/30">Fáciles de recordar</span>
-                        </div>
-
-                        <!-- Condición 1: Existencia -->
-                        <div class="space-y-2">
-                            <div class="flex items-center gap-2">
-                                <span class="w-6 h-6 rounded-lg bg-cyan-500/20 text-math-cyan font-bold text-xs flex items-center justify-center border border-cyan-500/30">1</span>
-                                <span class="text-xs font-bold uppercase tracking-wider text-cyan-200">Regla 1: Nadie se queda sin destino</span>
-                            </div>
-                            <div class="bg-slate-800/80 rounded-xl p-3 border border-slate-700/60 text-center sm:text-left overflow-x-auto text-base text-cyan-300 font-sans">
-                                $$\forall x \in A, \;\; \exists y \in B \quad \text{tal que} \quad f(x) = y$$
-                            </div>
-                            <p class="text-xs text-slate-300 leading-normal pl-2 border-l-2 border-cyan-400/50">
-                                <strong>En lenguaje común:</strong> Cualquier dato de entrada que aceptes debe producir una respuesta. No puedes dejar valores del punto de partida flotando o abandonados en la nada.
-                            </p>
-                        </div>
-
-                        <!-- Condición 2: Unicidad -->
-                        <div class="space-y-2 pt-2 border-t border-slate-800">
-                            <div class="flex items-center gap-2">
-                                <span class="w-6 h-6 rounded-lg bg-rose-500/20 text-math-rose font-bold text-xs flex items-center justify-center border border-rose-500/30">2</span>
-                                <span class="text-xs font-bold uppercase tracking-wider text-rose-200">Regla 2: Cero ambigüedad (solo un destino)</span>
-                            </div>
-                            <div class="bg-slate-800/80 rounded-xl p-3 border border-slate-700/60 text-center sm:text-left overflow-x-auto text-base text-rose-300 font-sans">
-                                $$\text{Si } y_1 = f(x) \;\;\land\;\; y_2 = f(x) \implies y_1 = y_2$$
-                            </div>
-                            <p class="text-xs text-slate-300 leading-normal pl-2 border-l-2 border-rose-400/50">
-                                <strong>En lenguaje común:</strong> Una entrada no puede tener "doble personalidad". No se permite que un mismo número apunte a dos resultados diferentes a la vez.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Prueba de la Recta Vertical Card -->
-                    <div class="border border-slate-200 rounded-xl p-4 bg-slate-50 space-y-2">
-                        <h5 class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
-                            <i class="ph-bold ph-line-vertical text-brand-600"></i> El Truco Visual: La Prueba de la Recta Vertical
-                        </h5>
-                        <p class="text-xs text-slate-600 leading-relaxed">
-                            Si tienes una gráfica dibujada y quieres saber al instante si es función: pasa un lápiz verticalmente de izquierda a derecha. Si el lápiz <strong>toca la curva más de una vez al mismo tiempo</strong>, ¡significa que para esa $x$ hay dos alturas distintas! Por lo tanto, <strong>no es función</strong>.
-                        </p>
-                        <div class="flex flex-wrap gap-2 text-xs font-semibold pt-1">
-                            <span class="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">✓ Parábola $y = x^2$ (Cada vertical la toca solo 1 vez)</span>
-                            <span class="text-rose-700 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">✗ Círculo (Una vertical toca arriba y abajo a la vez)</span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- SECCIÓN 2: LA TRÍADA - DOMINIO, CODOMINIO Y RANGO -->
-        <section id="componentes" class="space-y-6">
-            <div class="border-b border-slate-200 pb-4">
-                <div class="flex items-center gap-2 text-brand-600 font-bold text-sm uppercase tracking-wider">
-                    <span class="w-6 h-1 bg-brand-600 rounded-full"></span> Módulo 02
-                </div>
-                <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">El Trío Clave: Dominio, Codominio y Rango</h3>
-                <p class="text-slate-600 text-sm mt-1">Un error muy común es creer que Codominio y Rango son lo mismo. Esta sencilla metáfora te lo aclarará para siempre.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Dominio -->
-                <div class="glass-card rounded-2xl p-6 border-t-4 border-t-brand-500 shadow-sm space-y-3">
-                    <div class="flex justify-between items-center">
-                        <span class="text-xs font-bold uppercase tracking-wider text-brand-600">¿Qué puedo meter?</span>
-                        <i class="ph-bold ph-sign-in text-2xl text-brand-500"></i>
-                    </div>
-                    <h4 class="text-xl font-black text-slate-900">Dominio $\operatorname{Dom}(f)$</h4>
                     <p class="text-xs text-slate-600 leading-relaxed">
-                        Es el <strong>menú de valores permitidos</strong> para la entrada. Son todos los números que la fórmula puede procesar sin romperse ni causar errores matemáticos.
+                        Para calcular los senos de los 5 ángulos fundamentales, solo escribe los números del <strong>0 al 4</strong>, ponles raíz cuadrada y divide entre 2:
                     </p>
-                    <div class="bg-slate-100 rounded-lg p-3 text-xs font-mono space-y-1">
-                        <div class="text-slate-500">// Lo que está prohibido:</div>
-                        <div>1. Dividir por 0: $\frac{1}{x} \implies x \neq 0$</div>
-                        <div>2. Raíz par de negativos: $\sqrt{x} \implies x \ge 0$</div>
-                        <div>3. Logaritmos de no positivos: $\ln(x) \implies x > 0$</div>
+
+                    <!-- Interactive table for special angles -->
+                    <div class="overflow-x-auto formula-scroll">
+                        <table class="w-full text-center text-xs font-mono border-collapse">
+                            <thead>
+                                <tr class="bg-slate-100 text-slate-700">
+                                    <th class="p-2 border border-slate-200">Ángulo ($\theta$)</th>
+                                    <th class="p-2 border border-slate-200">$0^\circ$ ($0$)</th>
+                                    <th class="p-2 border border-slate-200">$30^\circ$ ($\frac{\pi}{6}$)</th>
+                                    <th class="p-2 border border-slate-200">$45^\circ$ ($\frac{\pi}{4}$)</th>
+                                    <th class="p-2 border border-slate-200">$60^\circ$ ($\frac{\pi}{3}$)</th>
+                                    <th class="p-2 border border-slate-200">$90^\circ$ ($\frac{\pi}{2}$)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="p-2 font-bold font-sans text-rose-600 bg-rose-50/50 border border-slate-200">Seno $\sin(\theta)$</td>
+                                    <td class="p-2 border border-slate-200">$\frac{\sqrt{0}}{2} = \mathbf{0}$</td>
+                                    <td class="p-2 border border-slate-200">$\frac{\sqrt{1}}{2} = \mathbf{\frac{1}{2}}$</td>
+                                    <td class="p-2 border border-slate-200">$\mathbf{\frac{\sqrt{2}}{2}}$</td>
+                                    <td class="p-2 border border-slate-200">$\mathbf{\frac{\sqrt{3}}{2}}$</td>
+                                    <td class="p-2 border border-slate-200">$\frac{\sqrt{4}}{2} = \mathbf{1}$</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 font-bold font-sans text-cyan-600 bg-cyan-50/50 border border-slate-200">Coseno $\cos(\theta)$</td>
+                                    <td class="p-2 border border-slate-200 font-bold">1</td>
+                                    <td class="p-2 border border-slate-200">$\frac{\sqrt{3}}{2}$</td>
+                                    <td class="p-2 border border-slate-200">$\frac{\sqrt{2}}{2}$</td>
+                                    <td class="p-2 border border-slate-200">$\frac{1}{2}$</td>
+                                    <td class="p-2 border border-slate-200 font-bold">0</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 font-bold font-sans text-emerald-600 bg-emerald-50/50 border border-slate-200">Tangente $\tan(\theta)$</td>
+                                    <td class="p-2 border border-slate-200">0</td>
+                                    <td class="p-2 border border-slate-200">$\frac{\sqrt{3}}{3}$</td>
+                                    <td class="p-2 border border-slate-200 font-bold">1</td>
+                                    <td class="p-2 border border-slate-200">$\sqrt{3}$</td>
+                                    <td class="p-2 border border-slate-200 text-rose-500 font-bold">Indefinido</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                </div>
-
-                <!-- Codominio -->
-                <div class="glass-card rounded-2xl p-6 border-t-4 border-t-math-violet shadow-sm space-y-3">
-                    <div class="flex justify-between items-center">
-                        <span class="text-xs font-bold uppercase tracking-wider text-purple-600">¿Dónde aterrizo?</span>
-                        <i class="ph-bold ph-target text-2xl text-purple-500"></i>
-                    </div>
-                    <h4 class="text-xl font-black text-slate-900">Codominio $\operatorname{Cod}(f)$</h4>
-                    <p class="text-xs text-slate-600 leading-relaxed">
-                        Es el <strong>universo general de posibles respuestas</strong> que anunciamos desde el principio (la "categoría esperada"), aunque al final no usemos todos sus elementos.
-                    </p>
-                    <div class="bg-purple-50 text-purple-900 rounded-lg p-3 text-xs leading-relaxed">
-                        <strong>Analogía:</strong> Si el menú de postres de un restaurante tiene 10 opciones en la carta (Codominio), tú y tus amigos solo pedirán 3 de ellos (Rango).
-                    </div>
-                </div>
-
-                <!-- Rango / Imagen -->
-                <div class="glass-card rounded-2xl p-6 border-t-4 border-t-math-emerald shadow-sm space-y-3">
-                    <div class="flex justify-between items-center">
-                        <span class="text-xs font-bold uppercase tracking-wider text-emerald-600">¿Qué sale en realidad?</span>
-                        <i class="ph-bold ph-check-circle text-2xl text-emerald-500"></i>
-                    </div>
-                    <h4 class="text-xl font-black text-slate-900">Rango / Imagen $\operatorname{Im}(f)$</h4>
-                    <p class="text-xs text-slate-600 leading-relaxed">
-                        Son <strong>las salidas reales y efectivas</strong> que la función produce al evaluar cada número del dominio. Es la "huella real" que deja la función.
-                    </p>
-                    <div class="bg-emerald-50 text-emerald-900 rounded-lg p-3 text-xs font-mono space-y-1">
-                        <div>Ejemplo con $f(x) = x^2$ en $\mathbb{R}$:</div>
-                        <div class="text-slate-600 font-sans">El codominio son todos los reales $\mathbb{R}$, pero como elevar al cuadrado nunca da negativos:</div>
-                        <div class="font-bold text-emerald-700">Rango = $[0, +\infty)$ (solo los positivos y cero)</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN 3: TIPOS DE FUNCIONES (INYECTIVA, SOBREYECTIVA, BIYECTIVA) -->
-        <section id="clasificacion" class="space-y-6">
-            <div class="border-b border-slate-200 pb-4">
-                <div class="flex items-center gap-2 text-brand-600 font-bold text-sm uppercase tracking-wider">
-                    <span class="w-6 h-1 bg-brand-600 rounded-full"></span> Módulo 03
-                </div>
-                <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">Cómo se Conectan: Inyectiva, Sobreyectiva y Biyectiva</h3>
-                <p class="text-slate-600 text-sm mt-1">Estas tres palabras describen cómo viajan las flechas desde el grupo de salida hasta el de llegada.</p>
-            </div>
-
-            <!-- Laboratorio Interactivo de Correspondencias de Conjuntos -->
-            <div class="glass-card rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-md space-y-6">
-                
-                <!-- Selector de Tipo -->
-                <div class="flex flex-wrap items-center justify-between gap-3">
-                    <div class="text-sm font-bold text-slate-800">Prueba cómo cambian las conexiones:</div>
-                    <div class="flex flex-wrap gap-2" id="presetButtons">
-                        <button onclick="setMappingPreset('injective')" class="preset-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-brand-600 text-white shadow-sm transition">
-                            Inyectiva (Sin repetir destino)
-                        </button>
-                        <button onclick="setMappingPreset('surjective')" class="preset-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-200 text-slate-700 hover:bg-slate-300 transition">
-                            Sobreyectiva (Sin dejar a nadie fuera)
-                        </button>
-                        <button onclick="setMappingPreset('bijective')" class="preset-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-200 text-slate-700 hover:bg-slate-300 transition">
-                            Biyectiva (Parejas perfectas)
-                        </button>
-                        <button onclick="setMappingPreset('notFunction')" class="preset-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-rose-100 text-rose-800 hover:bg-rose-200 transition">
-                            ¡Aquí se rompen las reglas!
-                        </button>
-                    </div>
-                </div>
-
-                <!-- SVG Diagram Graphic Display -->
-                <div class="w-full bg-slate-900 rounded-2xl p-4 sm:p-6 flex flex-col items-center justify-center relative overflow-hidden">
-                    <div class="w-full max-w-2xl h-64 sm:h-72 relative">
-                        <svg id="mappingSvg" class="w-full h-full" viewBox="0 0 600 240">
-                            <!-- Defs for arrow markers -->
-                            <defs>
-                                <marker id="arrowHead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-                                    <polygon points="0 0, 8 3, 0 6" fill="#38bdf8" />
-                                </marker>
-                                <marker id="arrowHeadError" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-                                    <polygon points="0 0, 8 3, 0 6" fill="#f43f5e" />
-                                </marker>
-                            </defs>
-
-                            <!-- Set A (Dominio) Container -->
-                            <rect x="50" y="20" width="130" height="200" rx="30" fill="#1e293b" stroke="#6366f1" stroke-width="2" stroke-dasharray="4 2"/>
-                            <text x="115" y="45" fill="#a5b4fc" font-size="14" font-weight="bold" text-anchor="middle">Dominio (A)</text>
-
-                            <!-- Set B (Codominio) Container -->
-                            <rect x="420" y="20" width="130" height="200" rx="30" fill="#1e293b" stroke="#8b5cf6" stroke-width="2" stroke-dasharray="4 2"/>
-                            <text x="485" y="45" fill="#d8b4fe" font-size="14" font-weight="bold" text-anchor="middle">Codominio (B)</text>
-
-                            <!-- Nodes & Paths dynamically injected via JavaScript -->
-                            <g id="svgDynamicLayer"></g>
-                        </svg>
-                    </div>
-
-                    <!-- Diagnosis Panel Below Diagram -->
-                    <div id="mappingVerdict" class="mt-4 w-full bg-slate-800/90 rounded-xl p-4 border border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm">
-                        <!-- Content updated by JS -->
-                    </div>
-                </div>
-
-                <!-- Cuadro Comparativo Teórico -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
-                    <!-- Inyectiva -->
-                    <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-2">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2.5 h-2.5 rounded-full bg-math-cyan"></span>
-                            <h4 class="font-bold text-slate-900 text-base">Inyectiva ("Uno a Uno")</h4>
-                        </div>
-                        <div class="font-mono text-xs text-indigo-700 bg-indigo-50 p-2 rounded">
-                            Dos entradas distintas $\to$ Salidas distintas
-                        </div>
-                        <p class="text-xs text-slate-600 leading-relaxed">
-                            <strong>Idea sencilla:</strong> Nadie comparte resultado. Ningún elemento del destino recibe más de una flecha. Si dos personas son diferentes, sus salidas también lo son.
-                        </p>
-                        <div class="text-xs text-slate-500 pt-1">
-                            <strong>Prueba del lápiz horizontal:</strong> Cualquier recta horizontal corta la gráfica a lo sumo en <em>un solo punto</em>.
-                        </div>
-                    </div>
-
-                    <!-- Sobreyectiva -->
-                    <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-2">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2.5 h-2.5 rounded-full bg-math-amber"></span>
-                            <h4 class="font-bold text-slate-900 text-base">Sobreyectiva ("Todo cubierto")</h4>
-                        </div>
-                        <div class="font-mono text-xs text-amber-800 bg-amber-50 p-2 rounded">
-                            Rango = Todo el Codominio
-                        </div>
-                        <p class="text-xs text-slate-600 leading-relaxed">
-                            <strong>Idea sencilla:</strong> No sobra nadie en el grupo de llegada. Todo elemento del codominio tiene al menos una flecha apuntándole (nadie se queda solitario).
-                        </p>
-                        <div class="text-xs text-slate-500 pt-1">
-                            Todo el espacio que prometiste al inicio es alcanzado en la práctica.
-                        </div>
-                    </div>
-
-                    <!-- Biyectiva -->
-                    <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-2">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2.5 h-2.5 rounded-full bg-math-emerald"></span>
-                            <h4 class="font-bold text-slate-900 text-base">Biyectiva ("Emparejamiento Perfecto")</h4>
-                        </div>
-                        <div class="font-mono text-xs text-emerald-800 bg-emerald-50 p-2 rounded">
-                            Inyectiva + Sobreyectiva a la vez
-                        </div>
-                        <p class="text-xs text-slate-600 leading-relaxed">
-                            <strong>Idea sencilla:</strong> Es un baile en parejas exactas: ni se comparten parejas, ni nadie se queda sentado. 
-                            <strong>¿Por qué importa tanto?</strong> Porque es la única que permite crear una <strong>función inversa ($f^{-1}$)</strong> para regresar sin confusiones al punto de partida.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN 4: PARIDAD - FUNCIONES PARES E IMPARES -->
-        <section id="paridad" class="space-y-6">
-            <div class="border-b border-slate-200 pb-4">
-                <div class="flex items-center gap-2 text-brand-600 font-bold text-sm uppercase tracking-wider">
-                    <span class="w-6 h-1 bg-brand-600 rounded-full"></span> Módulo 04
-                </div>
-                <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">Simetrías: Funciones Pares e Impares</h3>
-                <p class="text-slate-600 text-sm mt-1">¿Qué pasa si le metes un número positivo y luego el mismo pero negativo? La respuesta te dice si es par o impar.</p>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                
-                <!-- Left: Explicación Teórica -->
-                <div class="lg:col-span-5 space-y-5">
-                    <!-- Función Par -->
-                    <div class="glass-card rounded-2xl p-5 border-l-4 border-l-math-cyan shadow-sm space-y-2">
-                        <div class="flex items-center justify-between">
-                            <h4 class="font-bold text-slate-900">Función Par (Efecto Espejo)</h4>
-                            <span class="px-2 py-0.5 rounded text-xs font-semibold bg-cyan-100 text-cyan-800">Eje vertical Y</span>
-                        </div>
-                        <div class="font-mono text-xs bg-slate-900 text-cyan-300 p-2.5 rounded-lg">
-                            f(-x) = f(x)
-                        </div>
-                        <p class="text-xs text-slate-600 leading-relaxed">
-                            A la función "le da igual" si el número es positivo o negativo, da exactamente la misma altura. Si doblas la hoja por la mitad a lo largo del eje vertical, el lado izquierdo y el derecho se calcan a la perfección.
-                        </p>
-                        <div class="text-xs font-semibold text-slate-700">
-                            Ejemplo: $(-3)^2 = 9$ y $3^2 = 9$.
-                        </div>
-                    </div>
-
-                    <!-- Función Impar -->
-                    <div class="glass-card rounded-2xl p-5 border-l-4 border-l-math-rose shadow-sm space-y-2">
-                        <div class="flex items-center justify-between">
-                            <h4 class="font-bold text-slate-900">Función Impar (Efecto Giro de 180°)</h4>
-                            <span class="px-2 py-0.5 rounded text-xs font-semibold bg-rose-100 text-rose-800">Centro (0,0)</span>
-                        </div>
-                        <div class="font-mono text-xs bg-slate-900 text-rose-300 p-2.5 rounded-lg">
-                            f(-x) = -f(x)
-                        </div>
-                        <p class="text-xs text-slate-600 leading-relaxed">
-                            Si cambias el signo de la entrada, la salida también se pone de cabeza con el signo opuesto. Si tomas la gráfica y la giras boca abajo (media vuelta de $180^\circ$), queda exactamente igual.
-                        </p>
-                        <div class="text-xs font-semibold text-slate-700">
-                            Ejemplo: $(-2)^3 = -8$, que es el opuesto de $2^3 = 8$.
-                        </div>
-                    </div>
-
-                    <div class="p-3.5 bg-slate-100 rounded-xl text-xs text-slate-600 border border-slate-200 flex items-start gap-2">
-                        <i class="ph-bold ph-info text-brand-600 text-base mt-0.5"></i>
-                        <span><strong>Dato curioso:</strong> Al igual que con los seres humanos, la mayoría de funciones no tienen una simetría perfecta: muchas no son <em>ni par ni impar</em> (¡y no hay ningún problema con eso!).</span>
-                    </div>
-                </div>
-
-                <!-- Right: Canvas Interactivo de Paridad -->
-                <div class="lg:col-span-7 glass-card rounded-2xl p-6 border border-slate-200/90 shadow-sm space-y-4">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                        <div class="text-sm font-bold text-slate-800">Visualizador Gráfico de Simetría:</div>
-                        <select id="parityFuncSelect" class="bg-white border border-slate-300 text-slate-700 text-xs font-semibold rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-brand-500 focus:outline-none">
-                            <option value="par">Par: f(x) = x²</option>
-                            <option value="par_cos">Par: f(x) = 2·cos(x)</option>
-                            <option value="impar">Impar: f(x) = 0.3·x³</option>
-                            <option value="impar_sin">Impar: f(x) = 2·sin(x)</option>
-                            <option value="ninguna">Ni Par Ni Impar: f(x) = 0.4·x² + x</option>
-                        </select>
-                    </div>
-
-                    <div class="relative w-full h-72 bg-slate-900 rounded-xl overflow-hidden shadow-inner flex items-center justify-center">
-                        <canvas id="parityCanvas" class="w-full h-full block"></canvas>
-                        <div id="parityOverlayText" class="absolute bottom-3 left-3 bg-slate-800/80 backdrop-blur px-3 py-1.5 rounded-lg border border-slate-700 text-xs font-mono text-cyan-300">
-                            f(-x) == f(x)
-                        </div>
-                    </div>
-
-                    <div class="text-xs text-slate-500 flex justify-between items-center px-1">
-                        <span>Puntos evaluados: <span class="text-indigo-600 font-bold font-mono">x = 2.0</span> y <span class="text-rose-600 font-bold font-mono">x = -2.0</span></span>
-                        <span class="text-slate-400">Cuadrícula Cartesiana [-4, 4]</span>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- SECCIÓN 5: ÁLGEBRA DE FUNCIONES & COMPOSICIÓN -->
-        <section id="operaciones" class="space-y-8">
-            <div class="border-b border-slate-200 pb-4">
-                <div class="flex items-center gap-2 text-brand-600 font-bold text-sm uppercase tracking-wider">
-                    <span class="w-6 h-1 bg-brand-600 rounded-full"></span> Módulo 05
-                </div>
-                <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">Combinar Funciones: Operaciones y la Cadena de Montaje</h3>
-                <p class="text-slate-600 text-sm mt-1">Las funciones se pueden sumar, restar o encadenar una detrás de otra como pasos en una fábrica.</p>
-            </div>
-
-            <!-- Grid de Operaciones Aritméticas -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <!-- Suma / Resta -->
-                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
-                    <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-lg">+ / −</div>
-                    <h4 class="font-bold text-slate-900 text-sm">Suma & Resta</h4>
-                    <div class="font-mono text-xs text-slate-700">$(f \pm g)(x) = f(x) \pm g(x)$</div>
-                    <p class="text-xs text-slate-500 leading-relaxed">
-                        <strong>Dominio:</strong> Intersección común:<br>
-                        $\operatorname{Dom}(f) \cap \operatorname{Dom}(g)$
+                    <p class="text-[11px] text-slate-500 italic pt-1">
+                        * Nota cómo el coseno es exactamente la misma fila del seno pero <strong>leída en reversa</strong> de derecha a izquierda.
                     </p>
                 </div>
 
-                <!-- Multiplicación -->
-                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
-                    <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-lg">×</div>
-                    <h4 class="font-bold text-slate-900 text-sm">Multiplicación</h4>
-                    <div class="font-mono text-xs text-slate-700">$(f \cdot g)(x) = f(x) \cdot g(x)$</div>
-                    <p class="text-xs text-slate-500 leading-relaxed">
-                        <strong>Dominio:</strong> Intersección común:<br>
-                        $\operatorname{Dom}(f) \cap \operatorname{Dom}(g)$
-                    </p>
-                </div>
-
-                <!-- División -->
-                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
-                    <div class="w-8 h-8 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center font-bold text-lg">÷</div>
-                    <h4 class="font-bold text-slate-900 text-sm">Cociente</h4>
-                    <div class="font-mono text-xs text-slate-700">$(\frac{f}{g})(x) = \frac{f(x)}{g(x)}$</div>
-                    <p class="text-xs text-slate-500 leading-relaxed">
-                        <strong>Dominio:</strong> $\operatorname{Dom}(f) \cap \operatorname{Dom}(g)$ <strong>pero</strong> con la exclusión: $\{x \mid g(x) = 0\}$.
-                    </p>
-                </div>
-
-                <!-- Inversa -->
-                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
-                    <div class="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center font-bold text-lg">↺</div>
-                    <h4 class="font-bold text-slate-900 text-sm">Función Inversa</h4>
-                    <div class="font-mono text-xs text-slate-700">$f^{-1}(f(x)) = x$</div>
-                    <p class="text-xs text-slate-500 leading-relaxed">
-                        "Deshace" la acción de $f$. Solo existe si $f$ es biyectiva. Reflejo geométrico sobre la diagonal $y = x$.
-                    </p>
-                </div>
-            </div>
-
-            <!-- COMPOSICIÓN DE FUNCIONES: LA LÍNEA DE ENSAMBLAJE -->
-            <div class="glass-card rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div>
-                        <h4 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-                            <i class="ph-bold ph-git-commit text-brand-600"></i>
-                            Composición de Funciones: Pasar la Estafeta $(g \circ f)(x)$
-                        </h4>
-                        <p class="text-slate-600 text-xs sm:text-sm mt-1">
-                            ¡Ojo con el orden de lectura! Se lee "g compuesta con f", y significa que <strong>primero actúa $f$ sobre $x$</strong>, y luego el resultado se lo pasas a $g$ para que haga su trabajo: $g(f(x))$.
-                        </p>
-                    </div>
-                    <span class="math-badge bg-indigo-50 text-indigo-700 self-start md:self-auto">Trabajo en Equipo</span>
-                </div>
-                    <span class="math-badge bg-indigo-50 text-indigo-700 self-start md:self-auto">Cadena de Operaciones</span>
-                </div>
-
-                <!-- Visual Pipeline Diagram for Composition -->
-                <div class="bg-slate-900 text-white rounded-2xl p-6 relative overflow-hidden">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
-                        
-                        <!-- Paso 1 -->
-                        <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 text-center space-y-2 relative">
-                            <span class="text-xs uppercase font-bold text-math-cyan tracking-wider">Insumo Inicial</span>
-                            <div class="text-2xl font-mono font-black text-white">$x$</div>
-                            <p class="text-xs text-slate-400">Pertenece al Dominio de $f$</p>
-                        </div>
-
-                        <!-- Flecha y Función f -->
-                        <div class="bg-indigo-900/60 p-4 rounded-xl border border-indigo-500/50 text-center space-y-2 relative shadow-lg">
-                            <span class="text-xs uppercase font-bold text-indigo-300 tracking-wider">1ra Transformación</span>
-                            <div class="text-xl font-mono font-bold text-indigo-100">$f(x)$</div>
-                            <p class="text-xs text-indigo-200">Produce un resultado intermedio $u = f(x)$</p>
-                            <div class="text-[10px] text-amber-300 font-semibold">Condición: $f(x)$ debe caer en $\operatorname{Dom}(g)$</div>
-                        </div>
-
-                        <!-- Flecha y Función g -->
-                        <div class="bg-purple-900/60 p-4 rounded-xl border border-purple-500/50 text-center space-y-2 relative shadow-lg">
-                            <span class="text-xs uppercase font-bold text-purple-300 tracking-wider">2da Transformación</span>
-                            <div class="text-2xl font-mono font-black text-math-emerald">$g(f(x))$</div>
-                            <p class="text-xs text-purple-200">Salida final de la composición</p>
-                        </div>
-
-                    </div>
-
-                    <!-- Ejemplo Numérico en Vivo -->
-                    <div class="mt-6 pt-4 border-t border-slate-800 flex flex-wrap items-center justify-between gap-4 text-xs font-mono">
-                        <div>
-                            <span class="text-slate-400">Dadas:</span> 
-                            <span class="text-cyan-400 font-bold">$f(x) = 2x$</span> y 
-                            <span class="text-purple-400 font-bold">$g(x) = x + 5$</span>
-                        </div>
-                        <div class="text-slate-300">
-                            $(g \circ f)(3) = g(f(3)) = g(6) = 6 + 5 =$ <strong class="text-emerald-400 text-sm">11</strong>
-                        </div>
-                        <div class="text-slate-400">
-                            $(f \circ g)(3) = f(g(3)) = f(8) = 2(8) =$ <strong class="text-amber-400 text-sm">16</strong> 
-                            <span class="text-rose-400 ml-1 font-sans">(¡No es conmutativa!)</span>
-                        </div>
-                    </div>
-                </div>
             </div>
         </section>
 
         <!-- SECCIÓN 6: LABORATORIO DE AUTOEVALUACIÓN (10 EJERCICIOS) -->
-        <section id="laboratorio" class="space-y-6">
+        <section id="autoevaluacion" class="space-y-6">
             <div class="border-b border-slate-200 pb-4 flex flex-col md:flex-row md:items-end justify-between gap-4">
                 <div>
-                    <div class="flex items-center gap-2 text-brand-600 font-bold text-sm uppercase tracking-wider">
-                        <span class="w-6 h-1 bg-brand-600 rounded-full"></span> Módulo 06
+                    <div class="flex items-center gap-2 text-teal-600 font-bold text-sm uppercase tracking-wider">
+                        <span class="w-6 h-1 bg-teal-600 rounded-full"></span> Módulo 06
                     </div>
-                    <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">Comprueba tu Dominio: Banco de 10 Retos Conceptuales</h3>
-                    <p class="text-slate-600 text-sm mt-1">Evalúa tu comprensión teórica, gráfica y algebraica con retroalimentación inmediata en cada reactivo.</p>
+                    <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">Comprueba tu Dominio: Banco de 10 Retos Trigonométricos</h3>
+                    <p class="text-slate-600 text-sm mt-1">Evalúa tu comprensión gráfica, geométrica y analítica con retroalimentación instantánea en cada reactivo.</p>
                 </div>
 
-                <!-- Marcador de Progreso Dinámico -->
-                <div class="bg-indigo-50 border border-indigo-200 rounded-2xl px-5 py-3 flex items-center gap-6 shadow-sm self-start md:self-auto">
+                <!-- Live Score Counter -->
+                <div class="bg-teal-50 border border-teal-200 rounded-2xl px-5 py-3 flex items-center gap-6 shadow-xs self-start md:self-auto">
                     <div>
-                        <span class="text-[11px] font-bold text-indigo-500 uppercase tracking-wider block">Respondidas</span>
-                        <span id="quizAnsweredCount" class="text-xl font-black text-indigo-900 font-mono">0 / 10</span>
+                        <span class="text-[11px] font-bold text-teal-600 uppercase tracking-wider block">Respondidas</span>
+                        <span id="quizAnsweredCount" class="text-xl font-black text-teal-950 font-mono">0 / 10</span>
                     </div>
-                    <div class="border-l border-indigo-200 pl-6">
+                    <div class="border-l border-teal-200 pl-6">
                         <span class="text-[11px] font-bold text-emerald-600 uppercase tracking-wider block">Aciertos</span>
                         <span id="quizScoreCount" class="text-xl font-black text-emerald-700 font-mono">0</span>
                     </div>
-                    <button onclick="resetQuiz()" class="text-xs bg-white text-indigo-700 font-semibold px-3 py-1.5 rounded-lg border border-indigo-300 hover:bg-indigo-100 transition shadow-xs flex items-center gap-1.5">
+                    <button onclick="resetTrigQuiz()" class="text-xs bg-white text-teal-700 font-semibold px-3 py-1.5 rounded-lg border border-teal-300 hover:bg-teal-100 transition shadow-xs flex items-center gap-1.5">
                         <i class="ph-bold ph-arrows-clockwise"></i> Reiniciar
                     </button>
                 </div>
             </div>
 
+            <!-- Quiz Cards Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Pregunta 1 -->
+                
+                <!-- Q1 -->
                 <div class="glass-card rounded-2xl p-6 border border-slate-200 space-y-4">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold text-brand-600 uppercase tracking-wider">Pregunta 01 · Criterio Gráfico</span>
-                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600">Existencia & Unicidad</span>
+                        <span class="text-xs font-bold text-teal-600 uppercase tracking-wider">Pregunta 01 · Círculo Unitario</span>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600">Fundamentos</span>
                     </div>
                     <p class="text-sm font-semibold text-slate-900">
-                        ¿Por qué la ecuación de la circunferencia unitaria $x^2 + y^2 = 1$ no define a $y$ como función de $x$ en el plano real?
+                        En el círculo unitario de radio $1$, si un ángulo en posición estándar termina en el punto $(x, y)$, ¿cuál es el valor exacto de $\cos(\theta)$?
                     </p>
                     <div class="space-y-2" id="q1Options">
-                        <button onclick="checkQuiz(1, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
-                            A) Porque su gráfica es cerrada y no se extiende hasta el infinito.
+                        <button onclick="checkTrigQuiz(1, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
+                            A) Es la coordenada vertical $y$.
                         </button>
-                        <button onclick="checkQuiz(1, true, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
-                            B) Porque al despejar $y = \pm\sqrt{1 - x^2}$, a un mismo valor de $x \in (-1, 1)$ le corresponden dos salidas distintas ($y$), violando la unicidad.
+                        <button onclick="checkTrigQuiz(1, true, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
+                            B) Es la coordenada horizontal $x$.
                         </button>
-                        <button onclick="checkQuiz(1, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
-                            C) Porque su dominio no incluye a los números negativos.
+                        <button onclick="checkTrigQuiz(1, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
+                            C) Es el cociente $\frac{y}{x}$.
                         </button>
                     </div>
                     <div id="q1Feedback" class="hidden text-xs p-3.5 rounded-xl font-medium"></div>
                 </div>
 
-                <!-- Pregunta 2 -->
+                <!-- Q2 -->
                 <div class="glass-card rounded-2xl p-6 border border-slate-200 space-y-4">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold text-brand-600 uppercase tracking-wider">Pregunta 02 · Inyectividad</span>
-                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600">Uno a Uno</span>
+                        <span class="text-xs font-bold text-teal-600 uppercase tracking-wider">Pregunta 02 · Rango y Límites</span>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600">Dominio y Rango</span>
                     </div>
                     <p class="text-sm font-semibold text-slate-900">
-                        ¿La función cuadrática $f: \mathbb{R} \to \mathbb{R}$ dada por $f(x) = x^2$ es inyectiva?
+                        ¿Puede existir algún número real $\theta$ para el cual se cumpla que $\sin(\theta) = 2.5$?
                     </p>
                     <div class="space-y-2" id="q2Options">
-                        <button onclick="checkQuiz(2, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
-                            A) Sí, porque a cada número le corresponde un único valor elevado al cuadrado.
+                        <button onclick="checkTrigQuiz(2, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
+                            A) Sí, si el ángulo es mayor a $360^\circ$.
                         </button>
-                        <button onclick="checkQuiz(2, true, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
-                            B) No, porque por ejemplo $f(-2) = 4$ y $f(2) = 4$: dos entradas distintas generan la misma salida (falla la recta horizontal).
+                        <button onclick="checkTrigQuiz(2, true, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
+                            B) No, porque en un círculo de radio 1 la altura máxima alcanzable es 1, por lo que el rango del seno es estrictamente $[-1, 1]$.
                         </button>
-                        <button onclick="checkQuiz(2, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
-                            C) Sí, siempre y cuando su gráfica sea continua en el plano cartesiano.
+                        <button onclick="checkTrigQuiz(2, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
+                            C) Sí, siempre y cuando se exprese el ángulo en radianes negativos.
                         </button>
                     </div>
                     <div id="q2Feedback" class="hidden text-xs p-3.5 rounded-xl font-medium"></div>
                 </div>
 
-                <!-- Pregunta 3 -->
+                <!-- Q3 -->
                 <div class="glass-card rounded-2xl p-6 border border-slate-200 space-y-4">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold text-brand-600 uppercase tracking-wider">Pregunta 03 · Restricción de Dominio</span>
-                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600">Álgebra</span>
+                        <span class="text-xs font-bold text-teal-600 uppercase tracking-wider">Pregunta 03 · Asíntotas de Tangente</span>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600">Discontinuidades</span>
                     </div>
                     <p class="text-sm font-semibold text-slate-900">
-                        ¿Cuál es el dominio máximo real $\operatorname{Dom}(f)$ de la función $f(x) = \frac{\sqrt{x - 3}}{x - 7}$?
+                        ¿Por qué la función $f(x) = \tan(x)$ tiene asíntotas verticales en $x = \frac{\pi}{2}$ ($90^\circ$)?
                     </p>
                     <div class="space-y-2" id="q3Options">
-                        <button onclick="checkQuiz(3, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
-                            A) $\mathbb{R} \setminus \{7\}$
+                        <button onclick="checkTrigQuiz(3, true, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
+                            A) Porque $\tan(x) = \frac{\sin(x)}{\cos(x)}$ y en $\frac{\pi}{2}$ el denominador $\cos(\frac{\pi}{2}) = 0$, provocando una división por cero.
                         </button>
-                        <button onclick="checkQuiz(3, true, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
-                            B) $[3, 7) \cup (7, +\infty)$
+                        <button onclick="checkTrigQuiz(3, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
+                            B) Porque el radio del círculo unitario se rompe al llegar a la parte superior.
                         </button>
-                        <button onclick="checkQuiz(3, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
-                            C) $[3, +\infty)$
+                        <button onclick="checkTrigQuiz(3, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
+                            C) Porque el periodo de la tangente es $2\pi$.
                         </button>
                     </div>
                     <div id="q3Feedback" class="hidden text-xs p-3.5 rounded-xl font-medium"></div>
                 </div>
 
-                <!-- Pregunta 4 -->
+                <!-- Q4 -->
                 <div class="glass-card rounded-2xl p-6 border border-slate-200 space-y-4">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold text-brand-600 uppercase tracking-wider">Pregunta 04 · Sobreyectividad</span>
-                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600">Codominio vs Rango</span>
+                        <span class="text-xs font-bold text-teal-600 uppercase tracking-wider">Pregunta 04 · Cálculo de Periodo</span>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600">Transformaciones</span>
                     </div>
                     <p class="text-sm font-semibold text-slate-900">
-                        Se define la función exponencial $g: \mathbb{R} \to \mathbb{R}$ con $g(x) = e^x$. ¿Es sobreyectiva?
+                        ¿Cuál es el periodo $T$ de la onda sinusoidal dada por la función $y = 4\sin(2x)$?
                     </p>
                     <div class="space-y-2" id="q4Options">
-                        <button onclick="checkQuiz(4, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
-                            A) Sí, porque $e^x$ es una función continua y estrictamente creciente en todo $\mathbb{R}$.
+                        <button onclick="checkTrigQuiz(4, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
+                            A) $T = 4\pi$
                         </button>
-                        <button onclick="checkQuiz(4, true, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
-                            B) No, porque su rango es $(0, +\infty)$ y no cubre los números negativos ni el cero declarados en su codominio $\mathbb{R}$.
+                        <button onclick="checkTrigQuiz(4, true, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
+                            B) $T = \pi$, pues la frecuencia angular es $B = 2$, por lo que $T = \frac{2\pi}{B} = \frac{2\pi}{2} = \pi$.
                         </button>
-                        <button onclick="checkQuiz(4, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
-                            C) Sí, porque ningún valor de entrada queda sin pareja en el codominio.
+                        <button onclick="checkTrigQuiz(4, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
+                            C) $T = 2\pi$
                         </button>
                     </div>
                     <div id="q4Feedback" class="hidden text-xs p-3.5 rounded-xl font-medium"></div>
                 </div>
 
-                <!-- Pregunta 5 -->
+                <!-- Q5 -->
                 <div class="glass-card rounded-2xl p-6 border border-slate-200 space-y-4">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold text-brand-600 uppercase tracking-wider">Pregunta 05 · Invertibilidad</span>
-                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600">Biyectividad</span>
+                        <span class="text-xs font-bold text-teal-600 uppercase tracking-wider">Pregunta 05 · Signos por Cuadrante</span>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600">Mnemotecnia</span>
                     </div>
                     <p class="text-sm font-semibold text-slate-900">
-                        ¿Qué condición matemática es indispensable para que una función admita una función inversa $f^{-1}$?
+                        Si un ángulo $\theta$ mide $225^\circ$ (pertenece al Cuadrante III), ¿cuáles son los signos de $\sin(\theta)$ y $\cos(\theta)$?
                     </p>
                     <div class="space-y-2" id="q5Options">
-                        <button onclick="checkQuiz(5, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
-                            A) Que sea una función periódica o trigonométrica.
+                        <button onclick="checkTrigQuiz(5, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
+                            A) Seno es positivo (+) y Coseno es negativo (−).
                         </button>
-                        <button onclick="checkQuiz(5, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
-                            B) Que sea estrictamente par para que conserve simetría reflectiva.
+                        <button onclick="checkTrigQuiz(5, true, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
+                            B) Ambos son negativos (−), pues en el Cuadrante III la posición es hacia la izquierda ($x < 0$) y hacia abajo ($y < 0$).
                         </button>
-                        <button onclick="checkQuiz(5, true, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
-                            C) Que sea biyectiva (inyectiva y sobreyectiva a la vez) en los conjuntos dados.
+                        <button onclick="checkTrigQuiz(5, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
+                            C) Ambos son positivos (+).
                         </button>
                     </div>
                     <div id="q5Feedback" class="hidden text-xs p-3.5 rounded-xl font-medium"></div>
                 </div>
 
-                <!-- Pregunta 6 -->
+                <!-- Q6 -->
                 <div class="glass-card rounded-2xl p-6 border border-slate-200 space-y-4">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold text-brand-600 uppercase tracking-wider">Pregunta 06 · Paridad Analítica</span>
-                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600">Simetría</span>
+                        <span class="text-xs font-bold text-teal-600 uppercase tracking-wider">Pregunta 06 · Paridad y Simetría</span>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600">Simetrías</span>
                     </div>
                     <p class="text-sm font-semibold text-slate-900">
-                        ¿Cuál es la paridad de la función polinómica $h(x) = x^3 - 5x$?
+                        Si sabemos que $\cos(60^\circ) = 0.5$, ¿cuánto vale $\cos(-60^\circ)$?
                     </p>
                     <div class="space-y-2" id="q6Options">
-                        <button onclick="checkQuiz(6, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
-                            A) Es una función Par, pues tiene simetría especular con el eje $Y$.
+                        <button onclick="checkTrigQuiz(6, true, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
+                            A) $0.5$, porque el coseno es una función Par ($\cos(-x) = \cos(x)$) y el avance horizontal $x$ es el mismo hacia arriba o hacia abajo.
                         </button>
-                        <button onclick="checkQuiz(6, true, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
-                            B) Es una función Impar, ya que $h(-x) = (-x)^3 - 5(-x) = -x^3 + 5x = -h(x)$.
+                        <button onclick="checkTrigQuiz(6, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
+                            B) $-0.5$, porque cambiar el signo del ángulo siempre invierte la respuesta.
                         </button>
-                        <button onclick="checkQuiz(6, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
-                            C) No tiene paridad (ni par ni impar) por contener una resta.
+                        <button onclick="checkTrigQuiz(6, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
+                            C) $0$, porque se anulan entre sí.
                         </button>
                     </div>
                     <div id="q6Feedback" class="hidden text-xs p-3.5 rounded-xl font-medium"></div>
                 </div>
 
-                <!-- Pregunta 7 -->
+                <!-- Q7 -->
                 <div class="glass-card rounded-2xl p-6 border border-slate-200 space-y-4">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold text-brand-600 uppercase tracking-wider">Pregunta 07 · Álgebra de Paridades</span>
-                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600">Propiedades</span>
+                        <span class="text-xs font-bold text-teal-600 uppercase tracking-wider">Pregunta 07 · Identidad Fundamental</span>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600">Álgebra Trigonométrica</span>
                     </div>
                     <p class="text-sm font-semibold text-slate-900">
-                        Si $f(x)$ y $g(x)$ son ambas funciones impares, ¿cuál es la paridad de su producto $P(x) = f(x) \cdot g(x)$?
+                        Si un ángulo en el Cuadrante I tiene $\cos(\theta) = \frac{3}{5}$, ¿cuál es el valor de $\sin(\theta)$?
                     </p>
                     <div class="space-y-2" id="q7Options">
-                        <button onclick="checkQuiz(7, true, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
-                            A) Es siempre una función Par, porque $P(-x) = (-f(x)) \cdot (-g(x)) = f(x) \cdot g(x) = P(x)$.
+                        <button onclick="checkTrigQuiz(7, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
+                            A) $\frac{2}{5}$
                         </button>
-                        <button onclick="checkQuiz(7, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
-                            B) Es siempre una función Impar, ya que impar por impar conserva el signo negativo.
+                        <button onclick="checkTrigQuiz(7, true, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
+                            B) $\frac{4}{5}$, aplicando $\sin^2\theta + \cos^2\theta = 1 \implies \sin\theta = \sqrt{1 - (\frac{3}{5})^2} = \sqrt{\frac{16}{25}} = \frac{4}{5}$.
                         </button>
-                        <button onclick="checkQuiz(7, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
-                            C) Depende de las funciones elegidas, no existe una regla fija.
+                        <button onclick="checkTrigQuiz(7, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
+                            C) $1$
                         </button>
                     </div>
                     <div id="q7Feedback" class="hidden text-xs p-3.5 rounded-xl font-medium"></div>
                 </div>
 
-                <!-- Pregunta 8 -->
+                <!-- Q8 -->
                 <div class="glass-card rounded-2xl p-6 border border-slate-200 space-y-4">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold text-brand-600 uppercase tracking-wider">Pregunta 08 · Composición Evaluada</span>
-                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600">$(f \circ g)$</span>
+                        <span class="text-xs font-bold text-teal-600 uppercase tracking-wider">Pregunta 08 · Parejas Recíprocas</span>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600">Inversos Multiplicativos</span>
                     </div>
                     <p class="text-sm font-semibold text-slate-900">
-                        Dadas $f(x) = 2x + 1$ y $g(x) = x^2$, ¿cuál es el valor numérico de $(f \circ g)(3)$?
+                        ¿Cuál es la función recíproca de $\cos(x)$?
                     </p>
                     <div class="space-y-2" id="q8Options">
-                        <button onclick="checkQuiz(8, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
-                            A) $49$, porque primero evaluamos $f(3) = 7$ y luego $7^2 = 49$.
+                        <button onclick="checkTrigQuiz(8, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
+                            A) La Cosecante: $\csc(x)$.
                         </button>
-                        <button onclick="checkQuiz(8, true, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
-                            B) $19$, porque primero evaluamos la interior $g(3) = 3^2 = 9$, y luego $f(9) = 2(9) + 1 = 19$.
+                        <button onclick="checkTrigQuiz(8, true, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
+                            B) La Secante: $\sec(x) = \frac{1}{\cos(x)}$ (recuerda la regla mnemotécnica: C va con S).
                         </button>
-                        <button onclick="checkQuiz(8, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
-                            C) $12$, calculando la suma directa $f(3) + g(3)$.
+                        <button onclick="checkTrigQuiz(8, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
+                            C) La Cotangente: $\cot(x)$.
                         </button>
                     </div>
                     <div id="q8Feedback" class="hidden text-xs p-3.5 rounded-xl font-medium"></div>
                 </div>
 
-                <!-- Pregunta 9 -->
+                <!-- Q9 -->
                 <div class="glass-card rounded-2xl p-6 border border-slate-200 space-y-4">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold text-brand-600 uppercase tracking-wider">Pregunta 09 · Cálculo de Inversa</span>
-                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600">Despeje Algebraico</span>
+                        <span class="text-xs font-bold text-teal-600 uppercase tracking-wider">Pregunta 09 · Desfase Temporal</span>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600">Relación Seno-Coseno</span>
                     </div>
                     <p class="text-sm font-semibold text-slate-900">
-                        Si $f: \mathbb{R} \to \mathbb{R}$ está definida por $f(x) = \frac{2x - 3}{5}$, ¿cuál es su función inversa $f^{-1}(x)$?
+                        ¿Qué transformación geométrica convierte exactamente la gráfica de $\sin(x)$ en la gráfica de $\cos(x)$?
                     </p>
                     <div class="space-y-2" id="q9Options">
-                        <button onclick="checkQuiz(9, true, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
-                            A) $f^{-1}(x) = \frac{5x + 3}{2}$
+                        <button onclick="checkTrigQuiz(9, true, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
+                            A) Un desplazamiento horizontal de $\frac{\pi}{2}$ radianes ($90^\circ$) hacia la izquierda: $\cos(x) = \sin(x + \frac{\pi}{2})$.
                         </button>
-                        <button onclick="checkQuiz(9, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
-                            B) $f^{-1}(x) = \frac{5}{2x - 3}$
+                        <button onclick="checkTrigQuiz(9, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
+                            B) Duplicar la amplitud vertical multiplicando por 2.
                         </button>
-                        <button onclick="checkQuiz(9, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
-                            C) $f^{-1}(x) = \frac{2x + 3}{5}$
+                        <button onclick="checkTrigQuiz(9, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
+                            C) Invertir verticalmente la curva con un signo negativo.
                         </button>
                     </div>
                     <div id="q9Feedback" class="hidden text-xs p-3.5 rounded-xl font-medium"></div>
                 </div>
 
-                <!-- Pregunta 10 -->
+                <!-- Q10 -->
                 <div class="glass-card rounded-2xl p-6 border border-slate-200 space-y-4">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold text-brand-600 uppercase tracking-wider">Pregunta 10 · Aplicación en la Vida Real</span>
-                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600">Principio del Palomar</span>
+                        <span class="text-xs font-bold text-teal-600 uppercase tracking-wider">Pregunta 10 · Aplicación del Mundo Real</span>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600">Modelado Físico</span>
                     </div>
                     <p class="text-sm font-semibold text-slate-900">
-                        Sea $A$ un grupo de 500 estudiantes y $B = \{1, 2, \dots, 365\}$ los días del año. Considera la función $f: A \to B$ donde $f(e)$ es el día de cumpleaños del estudiante $e$. ¿Es inyectiva?
+                        La altura de la marea en un puerto se modela mediante $h(t) = 3\cos(\frac{\pi}{6} t) + 5$ (con $t$ en horas). ¿Cuáles son la altura mínima y máxima que alcanza el agua?
                     </p>
                     <div class="space-y-2" id="q10Options">
-                        <button onclick="checkQuiz(10, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
-                            A) Sí, porque cada estudiante tiene una sola fecha de cumpleaños asignada.
+                        <button onclick="checkTrigQuiz(10, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
+                            A) Mínimo $0$ metros y Máximo $8$ metros.
                         </button>
-                        <button onclick="checkQuiz(10, true, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
-                            B) No es inyectiva, porque al haber 500 alumnos y solo 365 días, por el Principio del Palomar al menos dos alumnos deben compartir la misma fecha de cumpleaños ($f(e_1) = f(e_2)$ con $e_1 \neq e_2$).
+                        <button onclick="checkTrigQuiz(10, true, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
+                            B) Mínimo $2$ metros y Máximo $8$ metros, ya que la línea media es $D = 5$ y la amplitud es $A = 3$ ($5 - 3 = 2$ y $5 + 3 = 8$).
                         </button>
-                        <button onclick="checkQuiz(10, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
-                            C) No es ni siquiera una función porque un día del año puede quedar sin cumpleañero.
+                        <button onclick="checkTrigQuiz(10, false, this)" class="w-full text-left p-3 rounded-xl border border-slate-200 text-xs hover:bg-slate-100 transition">
+                            C) Mínimo $-3$ metros y Máximo $+3$ metros.
                         </button>
                     </div>
                     <div id="q10Feedback" class="hidden text-xs p-3.5 rounded-xl font-medium"></div>
                 </div>
+
             </div>
         </section>
 
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-slate-200 py-8 text-center text-xs text-slate-500">
+    <footer class="bg-white border-t border-slate-200 py-8 text-center text-xs text-slate-500 mt-12">
         <div class="max-w-7xl mx-auto px-4 space-y-2">
-            <p class="font-semibold text-slate-700">Infografía Didáctica Interactiva: Fundamentos del Cálculo y Teoría de Conjuntos</p>
-            <p>Diseñado con fines pedagógicos utilizando estándares web modernos y visualizaciones dinámicas.</p>
+            <p class="font-bold text-slate-700">Infografía Didáctica Interactiva: Estudio Completo de Funciones Trigonométricas</p>
+            <p>Diseñado con estándares web contemporáneos, simulaciones de canvas fluidas y tipografía KaTeX.</p>
         </div>
     </footer>
 
     <script>
-        // ... existing code ... ...
         // -------------------------------------------------------------
-        // 2. DIAGRAMA DE MAPEO SVG (INYECTIVA, SOBREYECTIVA, BIYECTIVA)
+        // 1. SIMULADOR DEL CÍRCULO UNITARIO A LA ONDA SENO/COSENO
         // -------------------------------------------------------------
-        const svgDynamicLayer = document.getElementById('svgDynamicLayer');
-        const mappingVerdict = document.getElementById('mappingVerdict');
+        const trigCanvas = document.getElementById('trigCanvas');
+        const trigCtx = trigCanvas.getContext('2d');
+        const angleSlider = document.getElementById('angleSlider');
+        const sliderValueText = document.getElementById('sliderValueText');
+        const hudAngle = document.getElementById('hudAngle');
+        const hudSin = document.getElementById('hudSin');
+        const hudCos = document.getElementById('hudCos');
+        const btnPlayPause = document.getElementById('btnPlayPause');
+        const playIcon = document.getElementById('playIcon');
+        const playLabel = document.getElementById('playLabel');
+        const btnResetAngle = document.getElementById('btnResetAngle');
+        const toggleWaveSin = document.getElementById('toggleWaveSin');
+        const toggleWaveCos = document.getElementById('toggleWaveCos');
 
-        const domainNodes = [
-            { id: 'x1', label: 'x₁', cx: 115, cy: 70 },
-            { id: 'x2', label: 'x₂', cx: 115, cy: 120 },
-            { id: 'x3', label: 'x₃', cx: 115, cy: 170 }
-        ];
+        let isPlaying = false;
+        let currentAngleDeg = 0; // en grados
+        let activeWaveType = 'sin'; // 'sin' o 'cos'
+        let animFrameId = null;
 
-        const codomainNodes = [
-            { id: 'y1', label: 'y₁', cx: 485, cy: 60 },
-            { id: 'y2', label: 'y₂', cx: 485, cy: 105 },
-            { id: 'y3', label: 'y₃', cx: 485, cy: 150 },
-            { id: 'y4', label: 'y₄', cx: 485, cy: 195 }
-        ];
-
-        const presets = {
-            injective: {
-                title: "Función Inyectiva (Sin repetir destino)",
-                arrows: [
-                    { from: 'x1', to: 'y1' },
-                    { from: 'x2', to: 'y2' },
-                    { from: 'x3', to: 'y3' }
-                ],
-                explanation: "<span class='text-cyan-400 font-bold'>¿Por qué?</span> Cada valor de salida recibe como máximo una sola flecha (nadie comparte). No es sobreyectiva porque <strong>y₄</strong> se quedó solo sin pareja.",
-                isFunction: true
-            },
-            surjective: {
-                title: "Función Sobreyectiva (Todo el destino cubierto)",
-                arrows: [
-                    { from: 'x1', to: 'y1' },
-                    { from: 'x2', to: 'y2' },
-                    { from: 'x3', to: 'y2' }
-                ],
-                activeCodomainCount: 2,
-                explanation: "<span class='text-amber-400 font-bold'>¿Por qué?</span> Todas las metas disponibles {y₁, y₂} fueron alcanzadas; nadie sobra. No es inyectiva porque tanto x₂ como x₃ llegaron al mismo punto (y₂).",
-                isFunction: true
-            },
-            bijective: {
-                title: "Función Biyectiva (Parejas perfectas)",
-                arrows: [
-                    { from: 'x1', to: 'y1' },
-                    { from: 'x2', to: 'y2' },
-                    { from: 'x3', to: 'y3' }
-                ],
-                activeCodomainCount: 3,
-                explanation: "<span class='text-emerald-400 font-bold'>¡El escenario ideal!</span> Cada elemento tiene una sola pareja exclusiva y no sobra nadie. Como la conexión es tan limpia, <strong>puedes recorrer las flechas al revés sin dudar (función inversa f⁻¹).</strong>",
-                isFunction: true
-            },
-            notFunction: {
-                title: "¡Alto ahí! Esto NO es una Función",
-                arrows: [
-                    { from: 'x1', to: 'y1' },
-                    { from: 'x1', to: 'y2' },
-                    { from: 'x2', to: 'y3' }
-                ],
-                explanation: "<span class='text-rose-400 font-bold'>¿Qué salió mal?</span> x₁ tiene dos respuestas diferentes a la vez (rompe la regla de unicidad), y además x₃ no tiene ninguna flecha. Es una relación, pero no califica como función.",
-                isFunction: false
-            }
-        };
-
-        function renderMappingDiagram(presetKey) {
-            const config = presets[presetKey];
-            svgDynamicLayer.innerHTML = '';
-
-            const currentCodomain = config.activeCodomainCount 
-                ? codomainNodes.slice(0, config.activeCodomainCount)
-                : codomainNodes;
-
-            // Dibujar Flechas
-            config.arrows.forEach(arrow => {
-                const source = domainNodes.find(n => n.id === arrow.from);
-                const target = codomainNodes.find(n => n.id === arrow.to);
-                if (!source || !target) return;
-
-                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-                // Curva bezier suave
-                const d = `M ${source.cx + 12} ${source.cy} C ${(source.cx + target.cx) / 2} ${source.cy - 10}, ${(source.cx + target.cx) / 2} ${target.cy + 10}, ${target.cx - 15} ${target.cy}`;
-                path.setAttribute('d', d);
-                path.setAttribute('fill', 'none');
-                path.setAttribute('stroke', config.isFunction ? '#38bdf8' : '#f43f5e');
-                path.setAttribute('stroke-width', '2.5');
-                path.setAttribute('marker-end', config.isFunction ? 'url(#arrowHead)' : 'url(#arrowHeadError)');
-                path.classList.add('mapping-arrow');
-                svgDynamicLayer.appendChild(path);
-            });
-
-            // Dibujar Nodos del Dominio
-            domainNodes.forEach(node => {
-                const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-                circle.setAttribute('cx', node.cx);
-                circle.setAttribute('cy', node.cy);
-                circle.setAttribute('r', '14');
-                circle.setAttribute('fill', '#312e81');
-                circle.setAttribute('stroke', '#818cf8');
-                circle.setAttribute('stroke-width', '2');
-
-                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                text.setAttribute('x', node.cx);
-                text.setAttribute('y', node.cy + 4);
-                text.setAttribute('fill', '#ffffff');
-                text.setAttribute('font-size', '11');
-                text.setAttribute('font-family', 'monospace');
-                text.setAttribute('font-weight', 'bold');
-                text.setAttribute('text-anchor', 'middle');
-                text.textContent = node.label;
-
-                g.appendChild(circle);
-                g.appendChild(text);
-                svgDynamicLayer.appendChild(g);
-            });
-
-            // Dibujar Nodos del Codominio
-            currentCodomain.forEach(node => {
-                const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-                circle.setAttribute('cx', node.cx);
-                circle.setAttribute('cy', node.cy);
-                circle.setAttribute('r', '14');
-                circle.setAttribute('fill', '#4c1d95');
-                circle.setAttribute('stroke', '#c084fc');
-                circle.setAttribute('stroke-width', '2');
-
-                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                text.setAttribute('x', node.cx);
-                text.setAttribute('y', node.cy + 4);
-                text.setAttribute('fill', '#ffffff');
-                text.setAttribute('font-size', '11');
-                text.setAttribute('font-family', 'monospace');
-                text.setAttribute('font-weight', 'bold');
-                text.setAttribute('text-anchor', 'middle');
-                text.textContent = node.label;
-
-                g.appendChild(circle);
-                g.appendChild(text);
-                svgDynamicLayer.appendChild(g);
-            });
-
-            // Actualizar veredicto inferior
-            mappingVerdict.innerHTML = `
-                <div class="space-y-1">
-                    <div class="font-bold text-slate-100 flex items-center gap-2">
-                        <i class="ph-bold ${config.isFunction ? 'ph-check-circle text-emerald-400' : 'ph-x-circle text-rose-400'} text-lg"></i>
-                        ${config.title}
-                    </div>
-                    <div class="text-slate-300">${config.explanation}</div>
-                </div>
-            `;
+        function resizeTrigCanvas() {
+            trigCanvas.width = trigCanvas.parentElement.clientWidth;
+            trigCanvas.height = trigCanvas.parentElement.clientHeight;
+            drawTrigSimulation();
         }
+        window.addEventListener('resize', resizeTrigCanvas);
 
-        function setMappingPreset(presetKey) {
-            // Actualizar botones UI
-            document.querySelectorAll('.preset-btn').forEach(btn => {
-                btn.className = "preset-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-200 text-slate-700 hover:bg-slate-300 transition";
-            });
-            event.target.className = "preset-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-brand-600 text-white shadow-sm transition";
-            
-            renderMappingDiagram(presetKey);
-        }
+        function drawTrigSimulation() {
+            const w = trigCanvas.width;
+            const h = trigCanvas.height;
+            trigCtx.clearRect(0, 0, w, h);
 
-        // -------------------------------------------------------------
-        // 3. CANVAS DE PARIDAD & SIMETRÍA CARTESIANA
-        // -------------------------------------------------------------
-        const parityCanvas = document.getElementById('parityCanvas');
-        const ctx = parityCanvas.getContext('2d');
-        const parityFuncSelect = document.getElementById('parityFuncSelect');
-        const parityOverlayText = document.getElementById('parityOverlayText');
+            const rad = (currentAngleDeg * Math.PI) / 180;
+            const sinVal = Math.sin(rad);
+            const cosVal = Math.cos(rad);
 
-        function resizeCanvas() {
-            parityCanvas.width = parityCanvas.parentElement.clientWidth;
-            parityCanvas.height = parityCanvas.parentElement.clientHeight;
-            drawParityGraph();
-        }
-        window.addEventListener('resize', resizeCanvas);
+            // Actualizar etiquetas en HUD
+            hudAngle.textContent = `${currentAngleDeg.toFixed(0)}° = ${rad.toFixed(2)} rad`;
+            hudSin.textContent = sinVal.toFixed(3);
+            hudCos.textContent = cosVal.toFixed(3);
+            sliderValueText.textContent = `${currentAngleDeg.toFixed(0)}°`;
+            angleSlider.value = currentAngleDeg;
 
-        function getFunctionData(type, x) {
-            switch(type) {
-                case 'par': return x * x;
-                case 'par_cos': return 2 * Math.cos(x);
-                case 'impar': return 0.3 * Math.pow(x, 3);
-                case 'impar_sin': return 2 * Math.sin(x);
-                case 'ninguna': return 0.4 * (x * x) + x;
-                default: return x * x;
-            }
-        }
+            // Coordenadas del Círculo (Lado Izquierdo)
+            const circleRadius = Math.min(w * 0.18, h * 0.35, 105);
+            const circleCenterX = circleRadius + (w < 640 ? 25 : 45);
+            const circleCenterY = h / 2;
 
-        function drawParityGraph() {
-            const w = parityCanvas.width;
-            const h = parityCanvas.height;
-            const type = parityFuncSelect.value;
+            // 1. Dibujar Rejilla y Ejes del Círculo
+            trigCtx.strokeStyle = '#1e293b';
+            trigCtx.lineWidth = 1;
+            trigCtx.beginPath();
+            trigCtx.moveTo(circleCenterX - circleRadius - 20, circleCenterY);
+            trigCtx.lineTo(circleCenterX + circleRadius + 20, circleCenterY);
+            trigCtx.moveTo(circleCenterX, circleCenterY - circleRadius - 20);
+            trigCtx.lineTo(circleCenterX, circleCenterY + circleRadius + 20);
+            trigCtx.stroke();
 
-            ctx.clearRect(0, 0, w, h);
+            // 2. Dibujar Círculo Unitario
+            trigCtx.strokeStyle = '#334155';
+            trigCtx.lineWidth = 2;
+            trigCtx.beginPath();
+            trigCtx.arc(circleCenterX, circleCenterY, circleRadius, 0, Math.PI * 2);
+            trigCtx.stroke();
 
-            // Escalas Cartesianas
-            const originX = w / 2;
-            const originY = h / 2;
-            const scaleX = w / 10; // Rango de -5 a 5 en X
-            const scaleY = h / 10; // Rango de -5 a 5 en Y
+            // Punto sobre el Círculo
+            const px = circleCenterX + cosVal * circleRadius;
+            const py = circleCenterY - sinVal * circleRadius;
 
-            // 1. Dibujar Rejilla Suave
-            ctx.strokeStyle = '#334155';
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            for (let x = -5; x <= 5; x++) {
-                const px = originX + x * scaleX;
-                ctx.moveTo(px, 0);
-                ctx.lineTo(px, h);
-            }
-            for (let y = -5; y <= 5; y++) {
-                const py = originY - y * scaleY;
-                ctx.moveTo(0, py);
-                ctx.lineTo(w, py);
-            }
-            ctx.stroke();
+            // Triángulo de descomposición dentro del círculo
+            // Base horizontal (Coseno)
+            trigCtx.strokeStyle = '#06b6d4'; // Cyan
+            trigCtx.lineWidth = 3;
+            trigCtx.beginPath();
+            trigCtx.moveTo(circleCenterX, circleCenterY);
+            trigCtx.lineTo(px, circleCenterY);
+            trigCtx.stroke();
 
-            // 2. Ejes Principales
-            ctx.strokeStyle = '#94a3b8';
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            // Eje X
-            ctx.moveTo(0, originY);
-            ctx.lineTo(w, originY);
-            // Eje Y
-            ctx.moveTo(originX, 0);
-            ctx.lineTo(originX, h);
-            ctx.stroke();
+            // Altura vertical (Seno)
+            trigCtx.strokeStyle = '#f43f5e'; // Rose
+            trigCtx.lineWidth = 3;
+            trigCtx.beginPath();
+            trigCtx.moveTo(px, circleCenterY);
+            trigCtx.lineTo(px, py);
+            trigCtx.stroke();
 
-            // 3. Trazar la curva de la función
-            ctx.strokeStyle = '#38bdf8';
-            ctx.lineWidth = 3;
-            ctx.beginPath();
+            // Radio / Hipotenusa (Radio = 1)
+            trigCtx.strokeStyle = '#e2e8f0';
+            trigCtx.lineWidth = 2.5;
+            trigCtx.beginPath();
+            trigCtx.moveTo(circleCenterX, circleCenterY);
+            trigCtx.lineTo(px, py);
+            trigCtx.stroke();
 
-            let first = true;
-            for (let px = 0; px <= w; px += 2) {
-                const mathX = (px - originX) / scaleX;
-                const mathY = getFunctionData(type, mathX);
-                const py = originY - (mathY * scaleY);
+            // Arco del ángulo rotado
+            trigCtx.strokeStyle = '#f59e0b';
+            trigCtx.lineWidth = 2;
+            trigCtx.beginPath();
+            trigCtx.arc(circleCenterX, circleCenterY, circleRadius * 0.28, 0, -rad, true);
+            trigCtx.stroke();
 
-                if (first) {
-                    ctx.moveTo(px, py);
-                    first = false;
-                } else {
-                    ctx.lineTo(px, py);
+            // Punto en el círculo
+            trigCtx.fillStyle = '#ffffff';
+            trigCtx.beginPath();
+            trigCtx.arc(px, py, 6, 0, Math.PI * 2);
+            trigCtx.fill();
+            trigCtx.strokeStyle = activeWaveType === 'sin' ? '#f43f5e' : '#06b6d4';
+            trigCtx.lineWidth = 2;
+            trigCtx.stroke();
+
+            // ---------------------------------------------------------
+            // Zona Derecha: Proyección y Desenrollado de la Onda
+            // ---------------------------------------------------------
+            const waveStartX = circleCenterX + circleRadius + (w < 640 ? 30 : 60);
+            const waveWidth = w - waveStartX - 25;
+
+            if (waveWidth > 80) {
+                // Eje central de la onda
+                trigCtx.strokeStyle = '#334155';
+                trigCtx.lineWidth = 1;
+                trigCtx.beginPath();
+                trigCtx.moveTo(waveStartX, circleCenterY);
+                trigCtx.lineTo(w - 20, circleCenterY);
+                trigCtx.stroke();
+
+                // Líneas guía ±1
+                trigCtx.strokeStyle = '#1e293b';
+                trigCtx.setLineDash([4, 4]);
+                trigCtx.beginPath();
+                trigCtx.moveTo(waveStartX, circleCenterY - circleRadius);
+                trigCtx.lineTo(w - 20, circleCenterY - circleRadius);
+                trigCtx.moveTo(waveStartX, circleCenterY + circleRadius);
+                trigCtx.lineTo(w - 20, circleCenterY + circleRadius);
+                trigCtx.stroke();
+                trigCtx.setLineDash([]);
+
+                // Trazar curva completa de la función seleccionada
+                trigCtx.lineWidth = 3;
+                trigCtx.strokeStyle = activeWaveType === 'sin' ? '#f43f5e' : '#06b6d4';
+                trigCtx.beginPath();
+
+                const maxAngleDisplayedRad = 4 * Math.PI; // Muestra 2 ciclos completos (720°)
+                for (let xOffset = 0; xOffset <= waveWidth; xOffset += 2) {
+                    const sampleAngleRad = (xOffset / waveWidth) * maxAngleDisplayedRad;
+                    const val = activeWaveType === 'sin' ? Math.sin(sampleAngleRad) : Math.cos(sampleAngleRad);
+                    const waveY = circleCenterY - val * circleRadius;
+                    if (xOffset === 0) trigCtx.moveTo(waveStartX + xOffset, waveY);
+                    else trigCtx.lineTo(waveStartX + xOffset, waveY);
+                }
+                trigCtx.stroke();
+
+                // Posición actual del punto sobre la onda
+                const currentWaveX = waveStartX + (rad / maxAngleDisplayedRad) * waveWidth;
+                const activeVal = activeWaveType === 'sin' ? sinVal : cosVal;
+                const currentWaveY = circleCenterY - activeVal * circleRadius;
+
+                if (currentWaveX <= w - 10) {
+                    // Línea láser conectora entre el Círculo y la Onda
+                    trigCtx.strokeStyle = activeWaveType === 'sin' ? 'rgba(244, 63, 94, 0.7)' : 'rgba(6, 182, 212, 0.7)';
+                    trigCtx.lineWidth = 1.8;
+                    trigCtx.setLineDash([5, 3]);
+                    trigCtx.beginPath();
+                    if (activeWaveType === 'sin') {
+                        // Conecta la altura vertical del círculo directamente a la onda
+                        trigCtx.moveTo(px, py);
+                        trigCtx.lineTo(currentWaveX, currentWaveY);
+                    } else {
+                        // Conecta el punto horizontal
+                        trigCtx.moveTo(px, circleCenterY);
+                        trigCtx.lineTo(currentWaveX, currentWaveY);
+                    }
+                    trigCtx.stroke();
+                    trigCtx.setLineDash([]);
+
+                    // Bolita viajera sobre la onda
+                    trigCtx.fillStyle = '#ffffff';
+                    trigCtx.beginPath();
+                    trigCtx.arc(currentWaveX, currentWaveY, 6, 0, Math.PI * 2);
+                    trigCtx.fill();
+                    trigCtx.strokeStyle = activeWaveType === 'sin' ? '#f43f5e' : '#06b6d4';
+                    trigCtx.lineWidth = 2.5;
+                    trigCtx.stroke();
                 }
             }
-            ctx.stroke();
+        }
 
-            // 4. Test de Simetría en x = 2 y x = -2
-            const testX = 2;
-            const yPos = getFunctionData(type, testX);
-            const yNeg = getFunctionData(type, -testX);
-
-            const pxPos = originX + testX * scaleX;
-            const pyPos = originY - (yPos * scaleY);
-
-            const pxNeg = originX - testX * scaleX;
-            const pyNeg = originY - (yNeg * scaleY);
-
-            // Líneas guía discontinuas
-            ctx.setLineDash([4, 4]);
-            ctx.strokeStyle = '#f43f5e';
-            ctx.lineWidth = 1.5;
-
-            // Desde x = 2
-            ctx.beginPath();
-            ctx.moveTo(pxPos, originY);
-            ctx.lineTo(pxPos, pyPos);
-            ctx.lineTo(originX, pyPos);
-            ctx.stroke();
-
-            // Desde x = -2
-            ctx.strokeStyle = '#818cf8';
-            ctx.beginPath();
-            ctx.moveTo(pxNeg, originY);
-            ctx.lineTo(pxNeg, pyNeg);
-            ctx.lineTo(originX, pyNeg);
-            ctx.stroke();
-
-            ctx.setLineDash([]); // Reset dash
-
-            // Puntos destacados
-            ctx.fillStyle = '#f43f5e';
-            ctx.beginPath();
-            ctx.arc(pxPos, pyPos, 6, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.fillStyle = '#818cf8';
-            ctx.beginPath();
-            ctx.arc(pxNeg, pyNeg, 6, 0, Math.PI * 2);
-            ctx.fill();
-
-            // Actualizar etiqueta descriptiva
-            if (type.startsWith('par')) {
-                parityOverlayText.innerHTML = `<span class="text-cyan-400 font-bold">Simetría Par:</span> f(-2) = ${yNeg.toFixed(2)} == f(2) = ${yPos.toFixed(2)} (Simetría Eje Y)`;
-            } else if (type.startsWith('impar')) {
-                parityOverlayText.innerHTML = `<span class="text-rose-400 font-bold">Simetría Impar:</span> f(-2) = ${yNeg.toFixed(2)} == -f(2) = ${(-yPos).toFixed(2)} (Rotación Origen)`;
-            } else {
-                parityOverlayText.innerHTML = `<span class="text-amber-400 font-bold">Sin Simetría:</span> f(-2) = ${yNeg.toFixed(2)} ≠ f(2) = ${yPos.toFixed(2)}`;
+        // Loop de animación
+        function simulationLoop() {
+            if (isPlaying) {
+                currentAngleDeg += 0.8;
+                if (currentAngleDeg > 720) currentAngleDeg = 0;
+                drawTrigSimulation();
+                animFrameId = requestAnimationFrame(simulationLoop);
             }
         }
 
-        parityFuncSelect.addEventListener('change', drawParityGraph);
+        // Eventos de controles del simulador
+        btnPlayPause.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            if (isPlaying) {
+                playIcon.className = "ph-bold ph-pause";
+                playLabel.textContent = "Pausar Rotación";
+                btnPlayPause.classList.replace('bg-teal-600', 'bg-amber-600');
+                btnPlayPause.classList.replace('hover:bg-teal-700', 'hover:bg-amber-700');
+                simulationLoop();
+            } else {
+                playIcon.className = "ph-bold ph-play";
+                playLabel.textContent = "Iniciar Rotación";
+                btnPlayPause.classList.replace('bg-amber-600', 'bg-teal-600');
+                btnPlayPause.classList.replace('hover:bg-amber-700', 'hover:bg-teal-700');
+                if (animFrameId) cancelAnimationFrame(animFrameId);
+            }
+        });
+
+        btnResetAngle.addEventListener('click', () => {
+            currentAngleDeg = 0;
+            drawTrigSimulation();
+        });
+
+        angleSlider.addEventListener('input', (e) => {
+            if (isPlaying) {
+                btnPlayPause.click(); // pausa al interactuar
+            }
+            currentAngleDeg = parseFloat(e.target.value);
+            drawTrigSimulation();
+        });
+
+        toggleWaveSin.addEventListener('click', () => {
+            activeWaveType = 'sin';
+            toggleWaveSin.className = "flex-1 py-1.5 px-2 bg-rose-600 text-white rounded-lg font-bold text-center shadow-xs transition";
+            toggleWaveCos.className = "flex-1 py-1.5 px-2 bg-slate-200 text-slate-700 rounded-lg font-bold text-center hover:bg-slate-300 transition";
+            drawTrigSimulation();
+        });
+
+        toggleWaveCos.addEventListener('click', () => {
+            activeWaveType = 'cos';
+            toggleWaveCos.className = "flex-1 py-1.5 px-2 bg-cyan-600 text-white rounded-lg font-bold text-center shadow-xs transition";
+            toggleWaveSin.className = "flex-1 py-1.5 px-2 bg-slate-200 text-slate-700 rounded-lg font-bold text-center hover:bg-slate-300 transition";
+            drawTrigSimulation();
+        });
 
         // -------------------------------------------------------------
-        // 4. SISTEMA DE EVALUACIÓN INTERACTIVO (QUIZ EXPANDIDO)
+        // 2. SIMULADOR DE TRANSFORMACIONES DE ONDAS (A, B, C, D)
         // -------------------------------------------------------------
-        let answeredQuestions = new Set();
-        let correctAnswers = new Set();
+        const waveSimCanvas = document.getElementById('waveSimCanvas');
+        const waveCtx = waveSimCanvas.getContext('2d');
+        const sliderA = document.getElementById('sliderA');
+        const sliderB = document.getElementById('sliderB');
+        const sliderC = document.getElementById('sliderC');
+        const sliderD = document.getElementById('sliderD');
+        const valA = document.getElementById('valA');
+        const valB = document.getElementById('valB');
+        const valC = document.getElementById('valC');
+        const valD = document.getElementById('valD');
+        const liveFormulaBadge = document.getElementById('liveFormulaBadge');
 
-        const quizExplanations = {
+        function resizeWaveCanvas() {
+            waveSimCanvas.width = waveSimCanvas.parentElement.clientWidth;
+            waveSimCanvas.height = waveSimCanvas.parentElement.clientHeight;
+            drawWaveTransformation();
+        }
+        window.addEventListener('resize', resizeWaveCanvas);
+
+        function drawWaveTransformation() {
+            const w = waveSimCanvas.width;
+            const h = waveSimCanvas.height;
+            waveCtx.clearRect(0, 0, w, h);
+
+            const A = parseFloat(sliderA.value);
+            const B = parseFloat(sliderB.value);
+            const C = parseFloat(sliderC.value);
+            const D = parseFloat(sliderD.value);
+
+            valA.textContent = A.toFixed(1);
+            valB.textContent = B.toFixed(2);
+            valC.textContent = C.toFixed(2);
+            valD.textContent = D.toFixed(1);
+
+            // Fórmula en vivo
+            const cStr = C >= 0 ? `- ${C.toFixed(2)}` : `+ ${Math.abs(C).toFixed(2)}`;
+            const dStr = D >= 0 ? `+ ${D.toFixed(1)}` : `- ${Math.abs(D).toFixed(1)}`;
+            liveFormulaBadge.textContent = `y = ${A.toFixed(1)} · sin(${B.toFixed(2)}(x ${cStr})) ${dStr}`;
+
+            const centerY = h / 2;
+            const scaleY = h / 8; // escala vertical
+            const scaleX = w / (4 * Math.PI); // rango de 0 a 4pi
+
+            // Ejes Cartesianos
+            waveCtx.strokeStyle = '#334155';
+            waveCtx.lineWidth = 1;
+            waveCtx.beginPath();
+            waveCtx.moveTo(0, centerY);
+            waveCtx.lineTo(w, centerY);
+            waveCtx.stroke();
+
+            // Línea media base (D)
+            const midlineY = centerY - (D * scaleY);
+            waveCtx.strokeStyle = '#10b981'; // Emerald
+            waveCtx.lineWidth = 1.5;
+            waveCtx.setLineDash([4, 4]);
+            waveCtx.beginPath();
+            waveCtx.moveTo(0, midlineY);
+            waveCtx.lineTo(w, midlineY);
+            waveCtx.stroke();
+            waveCtx.setLineDash([]);
+
+            // Curva transformada
+            waveCtx.strokeStyle = '#38bdf8'; // Light Cyan
+            waveCtx.lineWidth = 3;
+            waveCtx.beginPath();
+
+            for (let px = 0; px <= w; px += 2) {
+                const mathX = px / scaleX;
+                const mathY = A * Math.sin(B * (mathX - C)) + D;
+                const py = centerY - (mathY * scaleY);
+                if (px === 0) waveCtx.moveTo(px, py);
+                else waveCtx.lineTo(px, py);
+            }
+            waveCtx.stroke();
+        }
+
+        [sliderA, sliderB, sliderC, sliderD].forEach(slider => {
+            slider.addEventListener('input', drawWaveTransformation);
+        });
+
+        // -------------------------------------------------------------
+        // 3. MOTOR DE AUTOEVALUACIÓN TRIGONOMÉTRICA (10 PREGUNTAS)
+        // -------------------------------------------------------------
+        let trigAnswered = new Set();
+        let trigCorrect = new Set();
+
+        const trigQuizFeedback = {
             1: {
-                correct: "¡Exacto! Para que sea función, cada $x$ debe tener una única imagen. La circunferencia $x^2 + y^2 = 1$ produce dos valores: $y = \\sqrt{1-x^2}$ y $y = -\\sqrt{1-x^2}$, por lo que una recta vertical en $x=0$ la corta en dos puntos $(0, 1)$ y $(0, -1)$.",
-                incorrect: "Incorrecto. Recuerda la condición de unicidad: para cualquier $x$ del dominio debe existir un único $y$. En $x^2 + y^2 = 1$, despejar da $y = \\pm\\sqrt{1-x^2}$, arrojando dos valores de salida para cada $x \\in (-1, 1)$."
+                correct: "¡Exacto! Por pura definición en el círculo unitario ($r = 1$), $\\cos(\\theta) = \\frac{\\text{Adyacente}}{1} = x$ y $\\sin(\\theta) = \\frac{\\text{Opuesto}}{1} = y$. ¡El coseno es la base y el seno es la altura!",
+                incorrect: "Incorrecto. Recuerda que en el círculo unitario $(r=1)$, la coordenada horizontal $x$ es el $\\cos(\\theta)$, mientras que la coordenada vertical $y$ es el $\\sin(\\theta)$."
             },
             2: {
-                correct: "¡Muy bien! En $f(x) = x^2$, dos elementos distintos del dominio tienen la misma imagen: $f(-2) = f(2) = 4$. Por lo tanto, no es uno a uno y falla la prueba de la recta horizontal.",
-                incorrect: "Incorrecto. Una función es inyectiva si $f(a) = f(b) \\implies a = b$. Para $f(x) = x^2$, tomar $a = 2$ y $b = -2$ da $f(2) = f(-2) = 4$, pero $2 \\neq -2$."
+                correct: "¡Muy bien! Dado que la hipotenusa en el círculo unitario es 1, ningún cateto (ni vertical ni horizontal) puede medir más de 1. El rango de $\\sin(\\theta)$ y $\\cos(\\theta)$ está acotado en $[-1, 1]$.",
+                incorrect: "Incorrecto. En los números reales, el seno y el coseno nunca pueden ser mayores a $1$ ni menores a $-1$. Su rango máximo es $[-1, 1]$, por lo que $\\sin(\\theta) = 2.5$ es imposible."
             },
             3: {
-                correct: "¡Excelente! La raíz cuadrada exige radicando no negativo: $x - 3 \\ge 0 \\implies x \\ge 3$. Además, el denominador no puede anularse: $x - 7 \\neq 0 \\implies x \\neq 7$. La intersección de ambas restricciones es $[3, 7) \\cup (7, +\\infty)$.",
-                incorrect: "Incorrecto. Hay dos condiciones simultáneas: 1) Radical par: $x - 3 \\ge 0 \\implies x \\ge 3$. 2) Denominador no nulo: $x - 7 \\neq 0 \\implies x \\neq 7$. Por tanto, el dominio es $[3, 7) \\cup (7, +\\infty)$."
+                correct: "¡Perfecto! La tangente se define como $\\tan(x) = \\frac{\\sin(x)}{\\cos(x)}$. Como $\\cos(90^\\circ) = 0$, estarías intentando dividir $\\frac{1}{0}$, lo cual produce una asíntota vertical hacia $\\pm\\infty$.",
+                incorrect: "Incorrecto. La razón es analítica: $\\tan(x) = \\frac{\\sin(x)}{\\cos(x)}$. Al llegar a $90^\\circ$ (o $\\frac{\\pi}{2}$), el coseno vale cero y la división por cero no existe en los reales, disparando la curva al infinito."
             },
             4: {
-                correct: "¡Correcto! Como $e^x > 0$ para todo $x \\in \\mathbb{R}$, el rango de la función exponencial es solo $(0, +\\infty)$. Al haberse declarado el codominio como todo $\\mathbb{R}$, los números $\\le 0$ quedan desatendidos ($\text{Rango} \\neq \\text{Codominio}$), así que no es sobreyectiva.",
-                incorrect: "Incorrecto. Para que sea sobreyectiva se requiere que todo el codominio sea cubierto ($\text{Rango} = \\text{Codominio}$). Como $e^x$ jamás toma valores negativos ni cero, no cubre todo $\\mathbb{R}$."
+                correct: "¡Excelente! La fórmula del periodo de una onda con frecuencia angular $B$ es $T = \\frac{2\\pi}{B}$. Como aquí $B = 2$, el periodo se comprime a la mitad: $T = \\frac{2\\pi}{2} = \\pi$.",
+                incorrect: "Incorrecto. El número que acompaña a la $x$ ($B = 2$) comprime el ciclo. La fórmula es $T = \\frac{2\\pi}{B} = \\frac{2\\pi}{2} = \\pi$."
             },
             5: {
-                correct: "¡Totalmente correcto! Para poder regresar unívocamente desde cada elemento del codominio hacia el dominio sin colisiones ni elementos sueltos, la función debe ser necesariamente biyectiva (inyectiva y sobreyectiva al mismo tiempo).",
-                incorrect: "Incorrecto. Si la función no fuera inyectiva, al invertirla una entrada tendría dos salidas; y si no fuera sobreyectiva, algunos elementos no tendrían a dónde regresar. Por ende, la biyectividad es condición indispensable."
+                correct: "¡Correcto! En el Cuadrante III ($180^\\circ < \\theta < 270^\\circ$), nos movemos hacia la izquierda ($x < 0$) y hacia abajo ($y < 0$). Por tanto, $\\cos(225^\\circ) = -\\frac{\\sqrt{2}}{2}$ y $\\sin(225^\\circ) = -\\frac{\\sqrt{2}}{2}$. Solo la tangente es positiva.",
+                incorrect: "Incorrecto. En el tercer cuadrante, las coordenadas son $(-x, -y)$, por lo que tanto el seno (altura) como el coseno (avance horizontal) son negativos. (Recuerda: 'Todas Saben Tomar Café' $\\implies$ solo la Tangente es positiva)."
             },
             6: {
-                correct: "¡Exacto! Al evaluar con $-x$: $h(-x) = (-x)^3 - 5(-x) = -x^3 + 5x = -(x^3 - 5x) = -h(x)$. Al cumplirse $h(-x) = -h(x)$, la función posee simetría impar (rotacional respecto al origen).",
-                incorrect: "Incorrecto. Comprueba la sustitución formal: $h(-x) = (-x)^3 - 5(-x) = -x^3 + 5x$. Si factorizas el signo negativo: $-(x^3 - 5x) = -h(x)$, lo cual es la definición exacta de función impar."
+                correct: "¡Muy bien razonado! El coseno posee simetría par respecto al eje vertical: $\\cos(-x) = \\cos(x)$. Al girar $60^\\circ$ hacia arriba o hacia abajo, la proyección sobre el eje horizontal $x$ es exactamente la misma: $+0.5$.",
+                incorrect: "Incorrecto. El coseno es una función Par, lo que significa que 'se come' el signo negativo: $\\cos(-\\theta) = \\cos(\\theta)$. Por tanto, $\\cos(-60^\\circ) = \\cos(60^\\circ) = 0.5$."
             },
             7: {
-                correct: "¡Perfecto! Como $f(-x) = -f(x)$ y $g(-x) = -g(x)$, al multiplicarlas obtenemos $P(-x) = [-f(x)] \\cdot [-g(x)] = (-1)(-1) [f(x) \\cdot g(x)] = P(x)$. El producto de dos impares resulta ser siempre par.",
-                incorrect: "Incorrecto. Aplica la regla de signos: cada función impar expulsa un signo negativo $(-1)$. Al multiplicarse, $(-1) \\times (-1) = +1$, produciendo $P(-x) = P(x)$, que es la definición de función par."
+                correct: "¡Impecable! Por el Teorema de Pitágoras en el círculo: $\\sin^2\\theta + \\cos^2\\theta = 1$. Entonces $\\sin\\theta = \\sqrt{1 - (3/5)^2} = \\sqrt{1 - 9/25} = \\sqrt{16/25} = 4/5$. (Es el clásico triángulo pitagórico 3-4-5).",
+                incorrect: "Incorrecto. Aplica la Identidad Fundamental: $\\sin^2\\theta + \\cos^2\\theta = 1$. Sustituyendo: $\\sin^2\\theta + (3/5)^2 = 1 \\implies \\sin^2\\theta = 1 - 9/25 = 16/25 \\implies \\sin\\theta = 4/5$."
             },
             8: {
-                correct: "¡Muy bien calculado! En la composición $(f \\circ g)(3) = f(g(3))$, primero se aplica la función interior: $g(3) = 3^2 = 9$. Luego se aplica la función exterior: $f(9) = 2(9) + 1 = 19$.",
-                incorrect: "Incorrecto. ¡Recuerda el orden de aplicación! En $(f \\circ g)(x) = f(g(x))$, la función de la derecha ($g$) opera primero. Evaluamos $g(3) = 9$ y luego $f(9) = 2(9) + 1 = 19$."
+                correct: "¡Acertado! La secante es el inverso multiplicativo del coseno: $\\sec(x) = \\frac{1}{\\cos(x)}$. La regla mnemotécnica nunca falla: la función que empieza con 'C' se empareja con la que empieza con 'S'.",
+                incorrect: "Incorrecto. La cosecante $\\csc(x)$ es la recíproca del seno ($\\frac{1}{\\sin}$), mientras que la secante $\\sec(x)$ es la recíproca del coseno ($\\frac{1}{\\cos}$)."
             },
             9: {
-                correct: "¡Acertado! Si escribimos $y = \\frac{2x - 3}{5}$, despejamos $x$: $5y = 2x - 3 \\implies 2x = 5y + 3 \\implies x = \\frac{5y + 3}{2}$. Intercambiando variables obtenemos $f^{-1}(x) = \\frac{5x + 3}{2}$.",
-                incorrect: "Incorrecto. Para hallar la inversa planteamos $y = \\frac{2x - 3}{5}$, multiplicamos por 5: $5y = 2x - 3$, sumamos 3: $5y + 3 = 2x$, y dividimos entre 2: $x = \\frac{5y + 3}{2}$."
+                correct: "¡Exacto! El seno y el coseno son hermanas gemelas idénticas, únicamente desfasadas por un cuarto de ciclo ($90^\\circ$ o $\\frac{\\pi}{2}$). Desplazar el seno $\\frac{\\pi}{2}$ hacia la izquierda reproduce exactamente la curva del coseno.",
+                incorrect: "Incorrecto. No cambia la amplitud ni se invierte: solo están desfasadas un cuarto de ciclo. $\\cos(x) = \\sin(x + \\frac{\\pi}{2})$."
             },
             10: {
-                correct: "¡Excelente aplicación! Aunque cada estudiante tiene una sola fecha de cumpleaños (por lo que sí es función), al haber 500 personas en el dominio y solo 365 días disponibles en el codominio, necesariamente al menos dos estudiantes compartirán el mismo día, impidiendo que sea inyectiva.",
-                incorrect: "Incorrecto. Sí califica como función porque cada alumno tiene una fecha definida. Sin embargo, no puede ser inyectiva porque hay más personas (500) que días en el año (365), lo que obliga a que múltiples entradas compartan la misma salida."
+                correct: "¡Sobresaliente! Como el coseno oscila entre $-1$ y $+1$, el término $3\\cos(...) $ oscila entre $-3$ y $+3$. Sumándole el nivel medio vertical $D = 5$, obtenemos: Mínimo = $5 - 3 = 2\\text{ m}$ y Máximo = $5 + 3 = 8\\text{ m}$.",
+                incorrect: "Incorrecto. El valor máximo del coseno es $+1$ y el mínimo es $-1$. Por ende: Altura máxima = $3(1) + 5 = 8\\text{ m}$, y Altura mínima = $3(-1) + 5 = 2\\text{ m}$."
             }
         };
 
-        function checkQuiz(questionNumber, isCorrect, clickedBtn) {
-            const feedbackEl = document.getElementById(`q${questionNumber}Feedback`);
-            const optionsContainer = document.getElementById(`q${questionNumber}Options`);
-            
+        function checkTrigQuiz(qNum, isCorrect, clickedBtn) {
+            const feedbackEl = document.getElementById(`q${qNum}Feedback`);
+            const optionsContainer = document.getElementById(`q${qNum}Options`);
+
             // Deshabilitar botones de esta pregunta
             const buttons = optionsContainer.querySelectorAll('button');
             buttons.forEach(btn => {
@@ -1288,22 +1317,22 @@
             });
 
             feedbackEl.classList.remove('hidden');
+            trigAnswered.add(qNum);
 
-            answeredQuestions.add(questionNumber);
             if (isCorrect) {
-                correctAnswers.add(questionNumber);
+                trigCorrect.add(qNum);
                 clickedBtn.classList.add('bg-emerald-100', 'border-emerald-500', 'text-emerald-900', 'font-bold');
                 feedbackEl.className = "text-xs p-3.5 rounded-xl font-medium bg-emerald-50 text-emerald-900 border border-emerald-300";
-                feedbackEl.innerHTML = `<strong>¡Respuesta Correcta!</strong> ${quizExplanations[questionNumber].correct}`;
+                feedbackEl.innerHTML = `<strong>¡Correcto!</strong> ${trigQuizFeedback[qNum].correct}`;
             } else {
                 clickedBtn.classList.add('bg-rose-100', 'border-rose-500', 'text-rose-900', 'font-bold');
                 feedbackEl.className = "text-xs p-3.5 rounded-xl font-medium bg-rose-50 text-rose-900 border border-rose-300";
-                feedbackEl.innerHTML = `<strong>Respuesta Incorrecta.</strong> ${quizExplanations[questionNumber].incorrect}`;
+                feedbackEl.innerHTML = `<strong>Atención:</strong> ${trigQuizFeedback[qNum].incorrect}`;
             }
 
             // Actualizar Marcadores
-            document.getElementById('quizAnsweredCount').textContent = `${answeredQuestions.size} / 10`;
-            document.getElementById('quizScoreCount').textContent = correctAnswers.size;
+            document.getElementById('quizAnsweredCount').textContent = `${trigAnswered.size} / 10`;
+            document.getElementById('quizScoreCount').textContent = trigCorrect.size;
 
             // Renderizar KaTeX en el feedback recién insertado
             if (typeof renderMathInElement === 'function') {
@@ -1317,9 +1346,9 @@
             }
         }
 
-        function resetQuiz() {
-            answeredQuestions.clear();
-            correctAnswers.clear();
+        function resetTrigQuiz() {
+            trigAnswered.clear();
+            trigCorrect.clear();
             document.getElementById('quizAnsweredCount').textContent = `0 / 10`;
             document.getElementById('quizScoreCount').textContent = `0`;
 
@@ -1338,31 +1367,26 @@
         }
 
         // -------------------------------------------------------------
-        // 5. MOTOR DE RENDERIZADO MATEMÁTICO (KaTeX)
+        // 4. INICIALIZACIÓN GENERAL (KaTeX & CANVASES)
         // -------------------------------------------------------------
-        function renderMathematicalFormulas() {
+        function renderAllMath() {
             if (typeof renderMathInElement === 'function') {
                 renderMathInElement(document.body, {
                     delimiters: [
                         { left: '$$', right: '$$', display: true },
-                        { left: '$', right: '$', display: false },
-                        { left: '\\(', right: '\\)', display: false },
-                        { left: '\\[', right: '\\]', display: true }
+                        { left: '$', right: '$', display: false }
                     ],
-                    throwOnError: false,
-                    ignoredTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+                    throwOnError: false
                 });
             } else {
-                // Reintentar si el script de KaTeX aún está cargando
-                setTimeout(renderMathematicalFormulas, 100);
+                setTimeout(renderAllMath, 150);
             }
         }
 
-        // Inicializaciones al cargar el documento
         window.addEventListener('load', () => {
-            renderMathematicalFormulas();
-            renderMappingDiagram('injective');
-            resizeCanvas();
+            renderAllMath();
+            resizeTrigCanvas();
+            resizeWaveCanvas();
         });
     </script>
 </body>
